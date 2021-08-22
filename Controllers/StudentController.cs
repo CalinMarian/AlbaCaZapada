@@ -23,10 +23,20 @@ namespace AlbaCaZapada.Controllers
             return View(objList);
         }
 
+        //GET AddStudent
         public IActionResult AddStudent()
         {
-
             return View();
+        }
+
+        //POST AddStudent
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddStudent(Student obj)
+        {
+            _db.Students.Add(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
