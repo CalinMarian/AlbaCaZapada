@@ -25,6 +25,7 @@ namespace AlbaCaZapada.Controllers
 
         public IActionResult AddStudent()
         {
+
             return View();
         }
     }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace AlbaCaZapada.Models
 {
     public class Student
+
     {
         [Key]
         public int Id { get; set; }
@@ -14,5 +15,9 @@ namespace AlbaCaZapada.Models
         public string Name { get; set; }
         [Required]
         public int CNP { get; set; }
+
     }
+
+
+
 }
