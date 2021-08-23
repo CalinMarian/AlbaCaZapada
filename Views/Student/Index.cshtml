@@ -27,8 +27,12 @@
                 @foreach (var student in Model)
                 {
                     <tr>
-                        <td width="50%">@student.Name</td>
-                        <td width="50%">@student.CNP</td>
+                        <td width="35%">@student.Name</td>
+                        <td width="35%">@student.CNP</td>
+                        <td width="30%" class="col-6 text-center">
+                            <a asp-controller="Student" asp-action="EditStudent" asp-route-Id="@student.Id" class="btn btn-primary">Actualizeaza</a>
+                            <a asp-controller="Student" asp-action="DeleteStudent" asp-route-Id="@student.Id"class="btn btn-danger">Sterge</a>
+                        </td>
                     </tr>
                 }
             </tbody>

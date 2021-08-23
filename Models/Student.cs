@@ -12,11 +12,14 @@ namespace AlbaCaZapada.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Nume obligatoriu")]
         [DisplayName("Nume elev")]
         public string Name { get; set; }
-        [Required]
-        public int CNP { get; set; }
+
+        [Required(ErrorMessage = "CNP obligatoriu")]
+        [Range(0,double.MaxValue)]
+        public double CNP { get; set; }
 
     }
 

@@ -34,9 +34,59 @@ namespace AlbaCaZapada.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddStudent(Student obj)
         {
-            _db.Students.Add(obj);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _db.Students.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View (obj);
+        }
+
+        //GET EditStudent
+        public IActionResult EditStudent(int Id)
+        {
+            var obj = _db.Students.Find(Id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        //POST EditStudent
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditStudentPost(Student obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Students.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
+
+        //GET EditStudent
+        public IActionResult DeleteStudent(int Id)
+        {
+            var obj = _db.Students.Find(Id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        //POST EditStudent
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteStudentPost(Student obj)
+        {
+                _db.Students.Remove(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
         }
     }
 }
