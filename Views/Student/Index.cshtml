@@ -21,6 +21,12 @@
                     <th>
                         CNP
                     </th>
+                    <th>
+                        Detalli elev
+                    </th>
+                    <th>
+                        Taxa scolarizare
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -28,10 +34,12 @@
                 {
                     <tr>
                         <td width="35%">@student.Name</td>
-                        <td width="35%">@student.CNP</td>
-                        <td width="30%" class="col-6 text-center">
-                            <a asp-controller="Student" asp-action="EditStudent" asp-route-Id="@student.Id" class="btn btn-primary">Actualizeaza</a>
-                            <a asp-controller="Student" asp-action="DeleteStudent" asp-route-Id="@student.Id"class="btn btn-danger">Sterge</a>
+                        <td width="15%">@student.CNP</td>
+                        <td width="15%">@Html.ActionLink("Detalii", "DetailsStudent", "Student", new { @id = student.Id }, null)
+                        <td width="15%"><a class="nav-link text-info" asp-controller="" asp-action="">Istoric plati</a></td>
+                        <td width="20%" class="col-6 text-center">
+                            <a class="btn btn-primary" asp-controller="Student" asp-action="EditStudent" asp-route-Id="@student.Id">Actualizeaza</a>
+                            <a class="btn btn-danger" asp-controller="Student" asp-action="DeleteStudent" asp-route-Id="@student.Id">Sterge</a>
                         </td>
                     </tr>
                 }
@@ -41,7 +49,7 @@
 
     else
     {
-        <p>Nu exista nici un student in baza de date.</p>
+        <p>Nu exista nici un elev in baza de date.</p>
     }
 
 </div>

@@ -68,7 +68,7 @@ namespace AlbaCaZapada.Controllers
             return View(obj);
         }
 
-        //GET EditStudent
+        //GET DeleteStudent
         public IActionResult DeleteStudent(int Id)
         {
             var obj = _db.Students.Find(Id);
@@ -79,7 +79,7 @@ namespace AlbaCaZapada.Controllers
             return View(obj);
         }
 
-        //POST EditStudent
+        //POST DeleteStudent
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteStudentPost(Student obj)
@@ -88,5 +88,18 @@ namespace AlbaCaZapada.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("Index");
         }
+
+        //GET DetailsStudent
+        public IActionResult DetailsStudent(int Id)
+        {
+            var obj = _db.Students.Find(Id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
     }
 }
+

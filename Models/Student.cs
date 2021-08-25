@@ -21,6 +21,20 @@ namespace AlbaCaZapada.Models
         [Range(0,double.MaxValue)]
         public double CNP { get; set; }
 
+        [Required(ErrorMessage = "Data nasterii obligatorie")]
+        [DataType(DataType.Date)]
+        [DisplayName("Data Nasterii")]
+        public DateTime? BirthDate { get; set; }
+
+        [DisplayName("Parinte 1")]
+        public string FirstParent { get; set; }
+        
+        [DisplayName("Parinte 2")]
+        public string SecondParent { get; set; }
+
+        [DisplayName("Alte detalii")]
+        public string Details { get; set; }
+
     }
 
 }

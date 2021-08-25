@@ -1,10 +1,10 @@
 ﻿@model AlbaCaZapada.Models.Student
 
-<form method="post" asp-action="DeleteStudentPost">
+<form method="post" asp-controller="Student" asp-action="DetailsStudent">
     <input asp-for="Id" hidden>
     <div class="border p-3">
         <div class="form-group row">
-            <h2 class="text-black-50 pl-3">Sterge elevul din baza de date</h2>
+            <h2 class="text-black-50 pl-3">Detalli elev</h2>
         </div>
         <div class="row">
             <div class="col-12">
@@ -32,40 +32,36 @@
                     </div>
                 </div>
 
-                <div class="col-12">
-                    <div class="form-group row">
-                        <div class="col-4">
-                            <label asp-for="FirstParent"></label>
-                        </div>
-                        <div class="col-4">
-                            <label asp-for="SecondParent"></label>
-                        </div>
-                        <div class="col-4">
-                            <label asp-for="Details"></label>
-                        </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="FirstParent"></label>
                     </div>
+                    <div class="col-4">
+                        <label asp-for="SecondParent"></label>
+                    </div>
+                    <div class="col-4">
+                        <label asp-for="Details"></label>
+                    </div>
+                </div>
 
-                    <div class="form-group row">
-                        <div class="col-4">
-                            @Html.TextAreaFor(model => model.FirstParent, 10, 40, null)
-                        </div>
-                        <div class="col-4">
-                            @Html.TextAreaFor(model => model.SecondParent, 10, 40, null)
-                        </div>
-                        <div class="col-4">
-                            @Html.TextAreaFor(model => model.Details, 10, 40, null)
-                        </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        @Html.TextAreaFor(model => model.SecondParent, 10, 40, null)
+                    </div>
+                    <div class="col-4">
+                        @Html.TextAreaFor(model => model.SecondParent, 10, 40, null)
+                    </div>
+                    <div class="col-4">
+                        @Html.TextAreaFor(model => model.Details, 10, 40, null)
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-6">
-                        <input type="submit" class="btn btn-danger" value="Sterge">
-                    </div>
-                    <div class="col-6">
-                        <a class="btn btn-success" asp-action="Index">Anuleaza</a>
+                        <a class="btn btn-dark" asp-action="Index">Inapoi</a>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </form>
