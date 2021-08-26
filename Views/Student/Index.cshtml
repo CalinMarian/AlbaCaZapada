@@ -6,7 +6,7 @@
             <h2 class="text-primary text-black-50">Lista elevi</h2>
         </div>
         <div class="col-6 text-right">
-            <a asp-action="AddStudent" class="btn btn-primary">Adauga elev</a>
+            <a asp-action="AddStudent" class="btn btn-success fa-pull-right">Adauga elev</a>
         </div>
     </div>
     <br />
@@ -38,8 +38,8 @@
                         <td width="15%">@Html.ActionLink("Detalii", "DetailsStudent", "Student", new { @id = student.Id }, null)
                         <td width="15%"><a class="nav-link text-info" asp-controller="" asp-action="">Istoric plati</a></td>
                         <td width="20%" class="col-6 text-center">
-                            <a class="btn btn-primary" asp-controller="Student" asp-action="EditStudent" asp-route-Id="@student.Id">Actualizeaza</a>
-                            <a class="btn btn-danger" asp-controller="Student" asp-action="DeleteStudent" asp-route-Id="@student.Id">Sterge</a>
+                            <a class="btn btn-warning" asp-controller="Student" asp-action="EditStudent" asp-route-Id="@student.Id">Actualizeaza</a>
+                            <a class="btn btn-primary" asp-controller="Student" asp-action="DeleteStudent" asp-route-Id="@student.Id">Sterge</a>
                         </td>
                     </tr>
                 }
