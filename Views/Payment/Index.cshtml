@@ -1,0 +1,45 @@
+﻿@model IEnumerable<AlbaCaZapada.Models.Payment>
+
+<form method="get" asp-action="Index" asp-route-Id="Id">
+    <div class="container p-3">
+        <div class="row pt-4">
+            <div class="col-6">
+                <h2 class="text-primary text-black-50">Taxa scolarizare pt:</h2>
+                <p>????Nume Elev????</p>
+                <h1></h1>
+            </div>
+            <div class="col-6 text-right">
+                <a class="btn btn-success fa-pull-right" asp-action="AddPayment" asp-route-Id="Id">Adauga plata</a>
+            </div>
+        </div>
+        <br />
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Valoare (RON)
+                    </th>
+                    <th>
+                        Data platii
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var payment in Model)
+                {
+                    <tr>
+                        <td width="50%">@payment.Amount</td>
+                        <td width="50%">@payment.PaymentDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</form>
+
+@section Scripts
+{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

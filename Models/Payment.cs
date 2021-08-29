@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,15 +11,22 @@ namespace AlbaCaZapada.Models
     public class Payment
     {
         [Key]
-        public int ID { get; set; }
-        
-        [Required]
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "Suma obligatorie")]
         [DisplayName("Suma")]
         public double Amount { get; set; }
-
+        
+        [Required(ErrorMessage = "Data obligatorie")]
         [DataType(DataType.Date)]
         [DisplayName("Data platii")]
         public DateTime? PaymentDate { get; set; }
 
+        public int StudentId { get; set; }
+        
+        [ForeignKey("StudentId")]
+        public virtual Student Student { get; set; }
+
     }
+
 }

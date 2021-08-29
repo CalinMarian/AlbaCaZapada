@@ -17,5 +17,6 @@ namespace AlbaCaZapada.Data
         }
 
         public DbSet<Student> Students { get; set; }
+        public DbSet<Payment> Payments { get; set; }
     }
 }
