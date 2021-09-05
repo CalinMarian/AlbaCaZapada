@@ -1,7 +1,6 @@
 ﻿@model AlbaCaZapada.Models.Payment
 
 <form method="post" asp-action="AddPayment">
-
     <div class="container p-3">
         <div class="form-group row">
             <h2 class="text-black-50 pl-3">Adauga plata</h2>
@@ -32,7 +31,7 @@
                         <input type="submit" class="btn btn-success" value="Salveaza plata">
                     </div>
                     <div class="col-6">
-                        <a asp-controller="Payment" asp-action="Index" asp-route-Id="Id" class="btn btn-primary fa-pull-right">Anuleaza</a>
+                        <a class="btn btn-danger fa-pull-right">Anuleaza</a>
                     </div>
                 </div>
             </div>

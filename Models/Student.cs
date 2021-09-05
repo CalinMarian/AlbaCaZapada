@@ -35,8 +35,8 @@ namespace AlbaCaZapada.Models
         [DisplayName("Alte detalii")]
         public string Details { get; set; }
 
-        public virtual ICollection<Payment> Payments { get; set; }
+        public virtual IEnumerable<Payment> Payments { get; set; }
 
     }
-
+   
 }

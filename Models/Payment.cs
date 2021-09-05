@@ -22,11 +22,10 @@ namespace AlbaCaZapada.Models
         [DisplayName("Data platii")]
         public DateTime? PaymentDate { get; set; }
 
+        [ForeignKey("Student")]
         public int StudentId { get; set; }
-        
-        [ForeignKey("StudentId")]
+
         public virtual Student Student { get; set; }
 
     }
-
 }

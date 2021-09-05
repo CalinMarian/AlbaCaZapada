@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlbaCaZapada.Controllers
 {
@@ -21,6 +22,18 @@ namespace AlbaCaZapada.Controllers
         {
             IEnumerable<Student> objList = _db.Students;
             return View(objList);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Index(string Search)
+        {
+            ViewData["StudentSearch"] = Search;
+            var std = from x in _db.Students select x;
+            if (!string.IsNullOrEmpty(Search))
+            {
+                std = std.Where(x => x.Name.Contains(Search));
+            }     
+            return View(await std.ToListAsync());
         }
 
         //GET AddStudent

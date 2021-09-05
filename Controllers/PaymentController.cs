@@ -1,6 +1,7 @@
 ﻿using AlbaCaZapada.Data;
 using AlbaCaZapada.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,15 +18,17 @@ namespace AlbaCaZapada.Controllers
             _db = db;
         }
 
-        //GET Payment
+        //GET Payments
         public IActionResult Index(int Id)
         {
-            var obj = _db.Payments.Where(p => p.StudentId == Id);
-            if (obj == null)
+            var student = _db.Students.FirstOrDefault(x => x.Id == Id);
+            ViewBag.Name = student.Name;
+            ViewData ["payment"] = student.Payments.ToList();
+            if (student == null)
             {
                 return NotFound();
             }
-            return View(obj);
+            return View(student);
         }
 
         //GET AddPayment
@@ -33,6 +36,7 @@ namespace AlbaCaZapada.Controllers
         {
             return View();
         }
+
         //Post AddPayment
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -46,5 +50,6 @@ namespace AlbaCaZapada.Controllers
             }
             return View(obj);
         }
+
     }
 }
