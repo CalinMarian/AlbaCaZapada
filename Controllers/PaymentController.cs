@@ -2,10 +2,7 @@
 using AlbaCaZapada.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AlbaCaZapada.Controllers
 {
@@ -17,13 +14,11 @@ namespace AlbaCaZapada.Controllers
         {
             _db = db;
         }
-
+        
         //GET Payments
         public IActionResult Index(int Id)
         {
-            var student = _db.Students.FirstOrDefault(x => x.Id == Id);
-            ViewBag.Name = student.Name;
-            ViewData ["payment"] = student.Payments.ToList();
+            var student = _db.Students.Include("Payments").FirstOrDefault(x => x.Id == Id);
             if (student == null)
             {
                 return NotFound();
@@ -32,8 +27,13 @@ namespace AlbaCaZapada.Controllers
         }
 
         //GET AddPayment
-        public IActionResult AddPayment()
+        public IActionResult AddPayment(int Id)
         {
+            var student = _db.Students.Include("Payments").FirstOrDefault(x => x.Id == Id);
+            if (student == null)
+            {
+                return NotFound();
+            }
             return View();
         }
 
@@ -44,9 +44,15 @@ namespace AlbaCaZapada.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Payments.Add(obj);
+                Payment newPayment = new()
+                {
+                    Amount = obj.Amount,
+                    PaymentDate = obj.PaymentDate,
+                    StudentId = obj.Id
+                };
+                _db.Payments.Add(newPayment);
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index",new { id = obj.Id});
             }
             return View(obj);
         }

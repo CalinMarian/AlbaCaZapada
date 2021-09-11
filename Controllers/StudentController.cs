@@ -1,7 +1,6 @@
 ﻿using AlbaCaZapada.Data;
 using AlbaCaZapada.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,13 +24,13 @@ namespace AlbaCaZapada.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string Search)
+        public async Task<IActionResult> Index(string search)
         {
-            ViewData["StudentSearch"] = Search;
+            ViewData["StudentSearch"] = search;
             var std = from x in _db.Students select x;
-            if (!string.IsNullOrEmpty(Search))
+            if (!string.IsNullOrEmpty(search))
             {
-                std = std.Where(x => x.Name.Contains(Search));
+                std = std.Where(x => x.Name.Contains(search));
             }     
             return View(await std.ToListAsync());
         }

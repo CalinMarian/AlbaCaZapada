@@ -5,10 +5,10 @@
         <div class="row pt-4">
             <div class="col-6">
                 <h2 class="text-primary text-black-50">Taxa scolarizare pt:</h2>
-                <h1>@ViewBag.Name</h1>
+                <h1>@Model.Name</h1>
             </div>
             <div class="col-6 text-right">
-                <a asp-action="AddPayment" class="btn btn-success fa-pull-right">Adauga plata</a>
+                <a class="btn btn-success fa-pull-right" asp-controller="Payment" asp-action="AddPayment" asp-route-Id="@Model.Id">Adauga plata</a>
             </div>
         </div>
         <br />
@@ -24,11 +24,11 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var payment in ViewData["payment"] as List<Payment>)
+                @foreach (var payment in Model.Payments)
                 {
                     <tr>
                         <td width="50%">@payment.Amount</td>
-                        <td width="50%">@payment.PaymentDate</td>
+                        <td width="50%">@payment.PaymentDate </td>
                     </tr>
                 }
             </tbody>
