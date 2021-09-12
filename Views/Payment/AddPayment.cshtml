@@ -5,7 +5,7 @@
         <div class="row pt-4">
             <div class="col-6">
                 <h2 class="text-black-50">Adauga plata pt</h2>
-                <h1>?????</h1>
+                <h1>@ViewData["StudentName"]</h1>
             </div>
         </div>
             <div class="row">
@@ -34,7 +34,7 @@
                             <input type="submit" class="btn btn-success" value="Salveaza plata">
                         </div>
                         <div class="col-6">
-                            <a class="btn btn-danger fa-pull-right" >Inapoi</a>
+                            <a class="btn btn-danger fa-pull-right" asp-action="Index" asp-route-id="@ViewData["StudentId"]">Inapoi</a>
                         </div>
                     </div>
                 </div>

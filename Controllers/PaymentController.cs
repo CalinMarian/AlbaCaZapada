@@ -30,6 +30,8 @@ namespace AlbaCaZapada.Controllers
         public IActionResult AddPayment(int Id)
         {
             var student = _db.Students.Include("Payments").FirstOrDefault(x => x.Id == Id);
+            ViewData["StudentName"] = student.Name;
+            ViewData["StudentId"] = student.Id;
             if (student == null)
             {
                 return NotFound();
@@ -55,6 +57,28 @@ namespace AlbaCaZapada.Controllers
                 return RedirectToAction("Index",new { id = obj.Id});
             }
             return View(obj);
+        }
+
+        //GET DeletePayment
+        public IActionResult DeletePayment(int id)
+        {
+            var obj = _db.Payments.Find(id);
+            ViewData["StudentId"] = TempData["StudentId"] = obj.StudentId;
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        //POST DeletePayment
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePaymentPost(Payment obj)
+        {
+            _db.Payments.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index", new { id = TempData["StudentId"] });
         }
 
     }

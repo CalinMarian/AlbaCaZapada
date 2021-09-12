@@ -1,0 +1,46 @@
+﻿@model AlbaCaZapada.Models.Payment
+
+<form method="post" asp-action="DeletePaymentPost">
+    <input asp-for="@Model.Id" hidden>
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-black-50 pl-3">Sterge plata</h2>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label asp-for="Amount"></label>
+                    </div>
+                    <div class="col-6">
+                        <label asp-for="PaymentDate"></label>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-6">
+                        <input asp-for="Amount" class="form-control">
+                    </div>
+                    <div class="col-6">
+                        <input asp-for="PaymentDate" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <input type="submit" class="btn btn-danger" value="Sterge">
+                    </div>
+                    <div class="col-6">
+                        <a class="btn btn-success fa-pull-right" asp-action="Index" asp-route-id="@ViewData["StudentId"]">Inapoi</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts
+{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

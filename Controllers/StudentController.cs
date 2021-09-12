@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace AlbaCaZapada.Controllers
 {
@@ -24,15 +25,17 @@ namespace AlbaCaZapada.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string search)
+        public async Task<IActionResult> Index(string sortOrder, string search)
         {
             ViewData["StudentSearch"] = search;
-            var std = from x in _db.Students select x;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
+            var students = from x in _db.Students select x;
             if (!string.IsNullOrEmpty(search))
             {
-                std = std.Where(x => x.Name.Contains(search));
-            }     
-            return View(await std.ToListAsync());
+                students = students.Where(x => x.Name.Contains(search));
+            }
+            students = students.OrderBy(s => s.Name);
+            return View(await students.AsNoTracking().ToListAsync());
         }
 
         //GET AddStudent
@@ -52,7 +55,7 @@ namespace AlbaCaZapada.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View (obj);
+            return View(obj);
         }
 
         //GET EditStudent
@@ -96,9 +99,9 @@ namespace AlbaCaZapada.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteStudentPost(Student obj)
         {
-                _db.Students.Remove(obj);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
+            _db.Students.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         //GET DetailsStudent

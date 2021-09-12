@@ -27,8 +27,11 @@
                 @foreach (var payment in Model.Payments)
                 {
                     <tr>
-                        <td width="50%">@payment.Amount</td>
-                        <td width="50%">@payment.PaymentDate </td>
+                        <td width="45%">@payment.Amount</td>
+                        <td width="45%">@payment.PaymentDate</td>
+                        <td width="10%">
+                            <a class="btn btn-danger" asp-controller="Payment" asp-action="DeletePayment" asp-route-Id="@payment.Id">Sterge</a>
+                        </td>
                     </tr>
                 }
             </tbody>
