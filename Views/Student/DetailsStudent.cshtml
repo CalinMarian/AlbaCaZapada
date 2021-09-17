@@ -22,13 +22,13 @@
 
                 <div class="form-group row">
                     <div class="col-4">
-                        <input asp-for="Name" disabled class="form-control">
+                        @Html.TextBoxFor(model => model.Name)
                     </div>
                     <div class="col-4">
-                        <input asp-for="CNP" disabled class="form-control">
+                        @Html.TextBoxFor(model => model.CNP)
                     </div>
                     <div class="col-4">
-                        <input asp-for="BirthDate" disabled class="form-control">
+                        @Html.TextBoxFor(model => model.BirthDate, "{0:dd/MM/yyyy}")
                     </div>
                 </div>
 

@@ -14,13 +14,14 @@ namespace AlbaCaZapada.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Suma obligatorie")]
-        [DisplayName("Suma")]
+        [DisplayName("Suma (RON)")]
         public double Amount { get; set; }
         
         [Required(ErrorMessage = "Data obligatorie")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [DisplayName("Data platii")]
-        public DateTime? PaymentDate { get; set; }
+        public DateTime PaymentDate { get; set; }
 
         [ForeignKey("Student")]
         public int StudentId { get; set; }

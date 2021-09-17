@@ -1,14 +1,14 @@
-﻿@model AlbaCaZapada.Models.Student
+﻿@model IEnumerable<AlbaCaZapada.Models.Payment>
 
 <form method="get" asp-action="Index">
     <div class="container p-3">
         <div class="row pt-4">
             <div class="col-6">
                 <h2 class="text-primary text-black-50">Taxa scolarizare pt:</h2>
-                <h1>@Model.Name</h1>
+                <h1>@ViewData["StudentName"]</h1>
             </div>
             <div class="col-6 text-right">
-                <a class="btn btn-success fa-pull-right" asp-controller="Payment" asp-action="AddPayment" asp-route-Id="@Model.Id">Adauga plata</a>
+                <a class="btn btn-success fa-pull-right" asp-controller="Payment" asp-action="AddPayment" asp-route-Id="@ViewData["StudentId"]">Adauga plata</a>
             </div>
         </div>
         <br />
@@ -16,7 +16,7 @@
             <thead>
                 <tr>
                     <th>
-                        Valoare (RON)
+                        Suma (RON)
                     </th>
                     <th>
                         Data platii
@@ -24,11 +24,11 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var payment in Model.Payments)
+                @foreach (var payment in Model)
                 {
                     <tr>
                         <td width="45%">@payment.Amount</td>
-                        <td width="45%">@payment.PaymentDate</td>
+                        <td width="45%">@payment.PaymentDate.ToString("dd/MM/yyyy")</td>
                         <td width="10%">
                             <a class="btn btn-danger" asp-controller="Payment" asp-action="DeletePayment" asp-route-Id="@payment.Id">Sterge</a>
                         </td>
@@ -36,7 +36,7 @@
                 }
             </tbody>
         </table>
-            <a class="btn btn-success" asp-controller="Student" asp-action="Index">Inapoi</a>
+        <a class="btn btn-success" asp-controller="Student" asp-action="Index">Inapoi</a>
     </div>
 </form>
 

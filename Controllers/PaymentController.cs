@@ -2,6 +2,7 @@
 using AlbaCaZapada.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AlbaCaZapada.Controllers
@@ -19,11 +20,15 @@ namespace AlbaCaZapada.Controllers
         public IActionResult Index(int Id)
         {
             var student = _db.Students.Include("Payments").FirstOrDefault(x => x.Id == Id);
+            var payment = student.Payments.OrderByDescending(x => x.PaymentDate);
+            ViewData["StudentName"] = student.Name;
+            ViewData["StudentId"] = student.Id;
             if (student == null)
             {
                 return NotFound();
             }
-            return View(student);
+
+            return View(payment);
         }
 
         //GET AddPayment
