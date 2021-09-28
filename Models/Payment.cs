@@ -23,6 +23,12 @@ namespace AlbaCaZapada.Models
         [DisplayName("Data platii")]
         public DateTime PaymentDate { get; set; }
 
+        [DisplayName("Nr. Zile Prezenta")]
+        public int DaysInSchool { get; set; }
+
+        [DisplayName("Nr. Zile Absenta")]
+        public int DaysOutSchool { get; set; }
+
         [ForeignKey("Student")]
         public int StudentId { get; set; }
 

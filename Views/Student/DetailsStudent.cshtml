@@ -9,26 +9,32 @@
         <div class="row">
             <div class="col-12">
                 <div class="form-group row">
-                    <div class="col-4">
+                    <div class="col-3">
                         <label asp-for="Name"></label>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <label asp-for="CNP"></label>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <label asp-for="BirthDate"></label>
+                    </div>
+                    <div class="col-3">
+                        <label asp-for="InSchool"></label>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <div class="col-4">
+                    <div class="col-3">
                         @Html.TextBoxFor(model => model.Name)
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         @Html.TextBoxFor(model => model.CNP)
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         @Html.TextBoxFor(model => model.BirthDate, "{0:dd/MM/yyyy}")
+                    </div>
+                    <div class="col-3">
+                        @Html.CheckBoxFor(model => model.InSchool)
                     </div>
                 </div>
 
@@ -58,7 +64,14 @@
 
                 <div class="form-group row">
                     <div class="col-6">
+                        @if (Model.InSchool == true)
+                        {
                         <a class="btn btn-success" asp-action="Index">Inapoi</a>
+                        }
+                        else
+                        { 
+                    <a class="btn btn-success" asp-action="InactiveStudents">Inapoi</a>
+                        }
                     </div>
                 </div>
             </div>

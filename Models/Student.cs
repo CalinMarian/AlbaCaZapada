@@ -34,9 +34,9 @@ namespace AlbaCaZapada.Models
 
         [DisplayName("Alte detalii")]
         public string Details { get; set; }
-        
-        [DisplayName("Grupa")]
-        public string Group { get; set; }
+
+        [DisplayName("Actualmente in gradinita")]
+        public bool InSchool { get; set; }
 
         public virtual List<Payment> Payments { get; set; }
 

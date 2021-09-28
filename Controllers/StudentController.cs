@@ -21,7 +21,8 @@ namespace AlbaCaZapada.Controllers
         public IActionResult Index()
         {
             IEnumerable<Student> objList = _db.Students;
-            return View(objList);
+            var objListSorted = objList.Where(x => x.InSchool == true);
+            return View(objListSorted);
         }
 
         [HttpGet]
@@ -30,12 +31,13 @@ namespace AlbaCaZapada.Controllers
             ViewData["StudentSearch"] = search;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
             var students = from x in _db.Students select x;
+            var sortedStudents = students.Where(x => x.InSchool == true);
             if (!string.IsNullOrEmpty(search))
             {
-                students = students.Where(x => x.Name.Contains(search));
+                sortedStudents = sortedStudents.Where(x => x.Name.Contains(search));
             }
-            students = students.OrderBy(s => s.Name);
-            return View(await students.AsNoTracking().ToListAsync());
+            sortedStudents = sortedStudents.OrderBy(s => s.Name);
+            return View(await sortedStudents.AsNoTracking().ToListAsync());
         }
 
         //GET AddStudent
@@ -78,33 +80,15 @@ namespace AlbaCaZapada.Controllers
             {
                 _db.Students.Update(obj);
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+                if (obj.InSchool == true)
+                { 
+                    return RedirectToAction("Index"); 
+                }
+                else return RedirectToAction("InactiveStudents");
             }
             return View(obj);
         }
 
-        //GET DeleteStudent
-        public IActionResult DeleteStudent(int Id)
-        {
-            var obj = _db.Students.Find(Id);
-            if (obj == null)
-            {
-                return NotFound();
-            }
-            return View(obj);
-        }
-
-        //POST DeleteStudent
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteStudentPost(Student obj)
-        {
-            _db.Students.Remove(obj);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        //GET DetailsStudent
         public IActionResult DetailsStudent(int Id)
         {
             var obj = _db.Students.Find(Id);
@@ -114,6 +98,52 @@ namespace AlbaCaZapada.Controllers
             }
             return View(obj);
         }
+
+        public IActionResult InactiveStudents()
+        {
+            IEnumerable<Student> objList = _db.Students;
+            var objListSorted = objList.Where(x => x.InSchool == false);
+            return View(objListSorted);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> InactiveStudents(string sortOrder, string search)
+        {
+            ViewData["StudentSearch"] = search;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
+            var students = from x in _db.Students select x;
+            var sortedStudents = students.Where(x => x.InSchool == false);
+            if (!string.IsNullOrEmpty(search))
+            {
+                sortedStudents = sortedStudents.Where(x => x.Name.Contains(search));
+            }
+            sortedStudents = sortedStudents.OrderBy(s => s.Name);
+            return View(await sortedStudents.AsNoTracking().ToListAsync());
+        }
+
+        //GET DeleteStudent
+        //public IActionResult DeleteStudent(int Id)
+        //{
+        //    var obj = _db.Students.Find(Id);
+        //    if (obj == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(obj);
+        //}
+
+        //POST DeleteStudent
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult DeleteStudentPost(Student obj)
+        //{
+        //    _db.Students.Remove(obj);
+        //    _db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
+
+        //GET DetailsStudent
+
 
     }
 }

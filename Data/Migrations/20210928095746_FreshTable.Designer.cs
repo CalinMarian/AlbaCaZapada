@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlbaCaZapada.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210911091519_NewDatabase")]
-    partial class NewDatabase
+    [Migration("20210928095746_FreshTable")]
+    partial class FreshTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,8 +31,13 @@ namespace AlbaCaZapada.Data.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<DateTime?>("PaymentDate")
-                        .IsRequired()
+                    b.Property<int>("DaysInSchool")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DaysOutSchool")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("StudentId")

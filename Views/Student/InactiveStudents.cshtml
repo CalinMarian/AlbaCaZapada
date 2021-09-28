@@ -3,21 +3,17 @@
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-4">
-            <h2 class="text-primary text-black-50">Total elevi activi: @Model.Count</h2>
+            <h2 class="text-primary text-black-50">Total fosti elevi: @Model.Count</h2>
         </div>
 
         <div class="col-4">
-            <form asp-controller="Student" asp-action="Index" method="get">
+            <form asp-controller="Student" asp-action="InactiveStudents" method="get">
                 <p>
                     <input type="search" placeholder="Nume elev..." value="@ViewData["StudentSearch"]" name="Search" />
                     <input type="submit" value="Cauta" class="btn btn-primary" />
-                    <a asp-action="Index" class="btn btn-danger">Sterge</a>
+                    <a asp-action="InactiveStudents" class="btn btn-danger">Sterge</a>
                 </p>
             </form>
-        </div>
-
-        <div class="col-4 text-right">
-            <a asp-action="AddStudent" class="btn btn-success fa-pull-right"> <i class="fas fa-user-plus"></i> Adauga elev</a>
         </div>
     </div>
     <br />
@@ -51,7 +47,6 @@
                         <td width="15%">@Html.ActionLink("Istoric Plati", "Index", "Payment", new { id = student.Id }, null)</td>
                         <td width="20%" class="col-6 text-center">
                             <a class="btn btn-warning" asp-controller="Student" asp-action="EditStudent" asp-route-Id="@student.Id">Actualizeaza</a>
-                            @*<a class="btn btn-danger" asp-controller="Student" asp-action="DeleteStudent" asp-route-Id="@student.Id">Sterge</a>*@
                         </td>
                     </tr>
                 }

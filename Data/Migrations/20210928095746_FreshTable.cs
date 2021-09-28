@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AlbaCaZapada.Data.Migrations
 {
-    public partial class NewDatabase : Migration
+    public partial class FreshTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,6 +44,20 @@ namespace AlbaCaZapada.Data.Migrations
                 oldType: "datetime2",
                 oldNullable: true);
 
+            migrationBuilder.AddColumn<int>(
+                name: "DaysInSchool",
+                table: "Payments",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.AddColumn<int>(
+                name: "DaysOutSchool",
+                table: "Payments",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Payments",
                 table: "Payments",
@@ -66,6 +80,14 @@ namespace AlbaCaZapada.Data.Migrations
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK_Payments",
+                table: "Payments");
+
+            migrationBuilder.DropColumn(
+                name: "DaysInSchool",
+                table: "Payments");
+
+            migrationBuilder.DropColumn(
+                name: "DaysOutSchool",
                 table: "Payments");
 
             migrationBuilder.RenameTable(

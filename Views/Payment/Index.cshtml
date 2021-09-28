@@ -8,7 +8,7 @@
                 <h1>@ViewData["StudentName"]</h1>
             </div>
             <div class="col-6 text-right">
-                <a class="btn btn-success fa-pull-right" asp-controller="Payment" asp-action="AddPayment" asp-route-Id="@ViewData["StudentId"]">Adauga plata</a>
+                <a class="btn btn-success fa-pull-right fas fa-plus" asp-controller="Payment" asp-action="AddPayment" asp-route-Id="@ViewData["StudentId"]">Adauga plata</a>
             </div>
         </div>
         <br />
@@ -41,7 +41,7 @@
         }
         else
         {
-            <p>Nu exista nici o plate pt acest elev!</p>
+            <p>Nu exista nici o plata pt acest elev!</p>
         }
         <a class="btn btn-success" asp-controller="Student" asp-action="Index">Inapoi</a>
     </div>

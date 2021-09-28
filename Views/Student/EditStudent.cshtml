@@ -9,29 +9,36 @@
         <div class="row">
             <div class="col-12">
                 <div class="form-group row">
-                    <div class="col-4">
+                    <div class="col-3">
                         <label asp-for="Name"></label>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <label asp-for="CNP"></label>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <label asp-for="BirthDate"></label>
+                    </div>
+                    <div class="col-3">
+                        <label asp-for="InSchool"></label>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <div class="col-4">
+                    <div class="col-3">
                         <input asp-for="Name" class="form-control">
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <input asp-for="CNP" class="form-control">
                         <span asp-validation-for="CNP" class="text-danger"></span>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <input asp-for="BirthDate" class="form-control">
                         <span asp-validation-for="BirthDate" class="text-danger"></span>
+                    </div>
+                    <div class="col-3">
+                        <input asp-for="InSchool">
+                        <span asp-validation-for="InSchool" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -65,7 +72,14 @@
                         <input type="submit" class="btn btn-success" value="Salveaza">
                     </div>
                     <div class="col-6">
-                        <a class="btn btn-danger fa-pull-right" asp-action="Index">Anuleaza</a>
+                        @if (Model.InSchool == true)
+                        {
+                            <a class="btn btn-danger fa-pull-right" asp-action="Index">Anuleaza</a>
+                        }
+                        else
+                        {
+                        <a class="btn btn-danger fa-pull-right" asp-action="InactiveStudents">Anuleaza</a>
+                        }
                     </div>
                 </div>
             </div>
