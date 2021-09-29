@@ -51,7 +51,14 @@
         {
             <p>Nu exista nici o plata pt acest elev!</p>
         }
-        <a class="btn btn-success" asp-controller="Student" asp-action="Index">Inapoi</a>
+        @if (ViewData["StudentInSchool"].ToString() == "True")
+        {
+            <a class="btn btn-success" asp-controller="Student" asp-action="Index">Inapoi</a>
+        }
+        else
+        {
+            <a class="btn btn-success" asp-controller="Student" asp-action="InactiveStudents">Inapoi</a>
+        }
 
     </div>
 </form>

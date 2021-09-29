@@ -23,6 +23,8 @@ namespace AlbaCaZapada.Controllers
             var payment = student.Payments.OrderByDescending(x => x.PaymentDate);
             ViewData["StudentName"] = student.Name;
             ViewData["StudentId"] = student.Id;
+            ViewData["StudentInSchool"] = student.InSchool.ToString();
+
             if (student == null)
             {
                 return NotFound();
