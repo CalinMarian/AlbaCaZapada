@@ -21,6 +21,7 @@ namespace AlbaCaZapada.Controllers
         public IActionResult Index()
         {
             IEnumerable<Student> objList = _db.Students;
+
             var objListSorted = objList.Where(x => x.InSchool == true);
             return View(objListSorted);
         }

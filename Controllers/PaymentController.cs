@@ -15,7 +15,7 @@ namespace AlbaCaZapada.Controllers
         {
             _db = db;
         }
-        
+
         //GET Payments
         public IActionResult Index(int Id)
         {
@@ -55,20 +55,22 @@ namespace AlbaCaZapada.Controllers
                 {
                     Amount = obj.Amount,
                     PaymentDate = obj.PaymentDate,
-                    StudentId = obj.Id
+                    StudentId = obj.Id,
+                    DaysInSchool = obj.DaysInSchool,
+                    DaysOutSchool = obj.DaysOutSchool
                 };
                 _db.Payments.Add(newPayment);
                 _db.SaveChanges();
-                return RedirectToAction("Index",new { id = obj.Id});
+                return RedirectToAction("Index", new { id = obj.Id });
             }
             return View(obj);
         }
 
-        //GET DeletePayment
-        public IActionResult DeletePayment(int id)
+        //GET EditPayment
+        public IActionResult EditPayment(int Id)
         {
-            var obj = _db.Payments.Find(id);
-            ViewData["StudentId"] = TempData["StudentId"] = obj.StudentId;
+            var obj = _db.Payments.Find(Id);
+            ViewData["StudentId"] = obj.StudentId;
             if (obj == null)
             {
                 return NotFound();
@@ -76,15 +78,42 @@ namespace AlbaCaZapada.Controllers
             return View(obj);
         }
 
-        //POST DeletePayment
+        //POST EditPayment
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePaymentPost(Payment obj)
+        public IActionResult EditPaymentPost(Payment obj, int studentId)
         {
-            _db.Payments.Remove(obj);
-            _db.SaveChanges();
-            return RedirectToAction("Index", new { id = TempData["StudentId"] });
+            if (ModelState.IsValid)
+            {
+                _db.Payments.Update(obj).Property("StudentId").IsModified=false;
+                _db.SaveChanges();
+                return RedirectToAction("Index", new { id = studentId });
+            }
+            return View(obj);
         }
+
+
+        //GET DeletePayment
+        //public IActionResult DeletePayment(int id)
+        //{
+        //    var obj = _db.Payments.Find(id);
+        //    ViewData["StudentId"] = TempData["StudentId"] = obj.StudentId;
+        //    if (obj == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(obj);
+        //}
+
+        //POST DeletePayment
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult DeletePaymentPost(Payment obj)
+        //{
+        //    _db.Payments.Remove(obj);
+        //    _db.SaveChanges();
+        //    return RedirectToAction("Index", new { id = TempData["StudentId"] });
+        //}
 
     }
 }
