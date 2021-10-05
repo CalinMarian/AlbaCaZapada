@@ -73,6 +73,7 @@ namespace AlbaCaZapada.Controllers
         {
             var obj = _db.Payments.Find(Id);
             ViewData["StudentId"] = obj.StudentId;
+            TempData["StudentId"] = obj.StudentId;
             if (obj == null)
             {
                 return NotFound();
@@ -83,13 +84,13 @@ namespace AlbaCaZapada.Controllers
         //POST EditPayment
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditPaymentPost(Payment obj, int studentId)
+        public IActionResult EditPaymentPost(Payment obj)
         {
             if (ModelState.IsValid)
             {
-                _db.Payments.Update(obj).Property("StudentId").IsModified=false;
+                _db.Payments.Update(obj).Property(x => x.StudentId).IsModified = false;
                 _db.SaveChanges();
-                return RedirectToAction("Index", new { id = studentId });
+                return RedirectToAction("Index", new { id = TempData["StudentId"] });
             }
             return View(obj);
         }
