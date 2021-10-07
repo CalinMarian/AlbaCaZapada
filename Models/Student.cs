@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,10 +17,6 @@ namespace AlbaCaZapada.Models
         [Required(ErrorMessage = "Nume obligatoriu")]
         [DisplayName("Nume elev")]
         public string Name { get; set; }
-
-        [Required(ErrorMessage = "CNP obligatoriu")]
-        [Range(0,double.MaxValue)]
-        public double CNP { get; set; }
 
         [Required(ErrorMessage = "Data nasterii obligatorie")]
         [DataType(DataType.Date)]
@@ -39,6 +36,13 @@ namespace AlbaCaZapada.Models
         public bool InSchool { get; set; }
 
         public virtual List<Payment> Payments { get; set; }
+
+        [ForeignKey("Gruop")]
+        public int GroupId { get; set; }
+
+        public virtual Group Group { get; set; }
+
+
 
     }
    

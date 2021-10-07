@@ -4,14 +4,16 @@ using AlbaCaZapada.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlbaCaZapada.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211007055848_CreateGroupTable")]
+    partial class CreateGroupTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,7 +34,7 @@ namespace AlbaCaZapada.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Group");
                 });
 
             modelBuilder.Entity("AlbaCaZapada.Models.Payment", b =>
@@ -96,7 +98,8 @@ namespace AlbaCaZapada.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GroupId");
+                    b.HasIndex("GroupId")
+                        .IsUnique();
 
                     b.ToTable("Students");
                 });
@@ -315,8 +318,8 @@ namespace AlbaCaZapada.Data.Migrations
             modelBuilder.Entity("AlbaCaZapada.Models.Student", b =>
                 {
                     b.HasOne("AlbaCaZapada.Models.Group", "Group")
-                        .WithMany("Students")
-                        .HasForeignKey("GroupId")
+                        .WithOne("Student")
+                        .HasForeignKey("AlbaCaZapada.Models.Student", "GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -376,7 +379,7 @@ namespace AlbaCaZapada.Data.Migrations
 
             modelBuilder.Entity("AlbaCaZapada.Models.Group", b =>
                 {
-                    b.Navigation("Students");
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("AlbaCaZapada.Models.Student", b =>

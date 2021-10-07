@@ -13,7 +13,7 @@
                         <label asp-for="Name"></label>
                     </div>
                     <div class="col-3">
-                        <label asp-for="CNP"></label>
+                        <label asp-for="Group"></label>
                     </div>
                     <div class="col-3">
                         <label asp-for="BirthDate"></label>
@@ -28,7 +28,7 @@
                         @Html.TextBoxFor(model => model.Name)
                     </div>
                     <div class="col-3">
-                        @Html.TextBoxFor(model => model.CNP)
+                        @Html.TextBoxFor(model => model.Group)
                     </div>
                     <div class="col-3">
                         @Html.TextBoxFor(model => model.BirthDate, "{0:dd/MM/yyyy}")
