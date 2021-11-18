@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data.Common;
 
 namespace AlbaCaZapada.Controllers
 {
@@ -18,18 +20,19 @@ namespace AlbaCaZapada.Controllers
             _db = db;
         }
 
-        public IActionResult Index()
-        {
-            IEnumerable<Student> objList = _db.Students;
-            return View(objList);
-        }
+        //public IActionResult Index()
+        //{
+        //    IEnumerable<Student> objList = _db.Students;
+
+        //    return View(objList);
+        //}
 
         [HttpGet]
         public async Task<IActionResult> Index(string sortOrder, string search)
         {
             ViewData["StudentSearch"] = search;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
-            var students = from x in _db.Students select x;
+            var students = from x in _db.Students.Include(x => x.Group) select x;
             var sortedStudents = students.Where(x => x.InSchool == true);
             if (!string.IsNullOrEmpty(search))
             {
@@ -42,6 +45,17 @@ namespace AlbaCaZapada.Controllers
         //GET AddStudent
         public IActionResult AddStudent()
         {
+            var groups = _db.Groups.ToList();
+
+            IEnumerable<SelectListItem> GetSelectListItems()
+            {
+                return _db.Groups.Select(c => new SelectListItem()
+                {
+                    Text = c.GroupName,
+                    Value = c.Id.ToString(),
+                });
+            };
+            ViewBag.listName = GetSelectListItems();
             return View();
         }
 
@@ -50,9 +64,21 @@ namespace AlbaCaZapada.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddStudent(Student obj)
         {
+            var group = _db.Groups.Find(obj.GroupId);
+            var newStudent = new Student()
+            {
+                Name = obj.Name,
+                BirthDate = obj.BirthDate,
+                FirstParent = obj.FirstParent,
+                SecondParent = obj.SecondParent,
+                Details = obj.Details,
+                InSchool = obj.InSchool,
+                GroupId = obj.GroupId,
+                Group = _db.Groups.Find(obj.Id)
+            };
             if (ModelState.IsValid)
             {
-                _db.Students.Add(obj);
+                _db.Students.Add(newStudent);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -80,8 +106,8 @@ namespace AlbaCaZapada.Controllers
                 _db.Students.Update(obj);
                 _db.SaveChanges();
                 if (obj.InSchool == true)
-                { 
-                    return RedirectToAction("Index"); 
+                {
+                    return RedirectToAction("Index");
                 }
                 else return RedirectToAction("InactiveStudents");
             }

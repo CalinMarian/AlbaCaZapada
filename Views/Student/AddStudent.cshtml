@@ -12,7 +12,7 @@
                         <label asp-for="Name"></label>
                     </div>
                     <div class="col-3">
-                        <label asp-for="Group.GroupName"></label>
+                        @Html.LabelFor(x => x.Group)
                     </div>
                     <div class="col-3">
                         <label asp-for="BirthDate"></label>
@@ -28,7 +28,7 @@
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="col-3">
-                        <input asp-for="Group" class="form-control">
+                        @Html.DropDownList("GroupId", (IEnumerable<SelectListItem>)ViewBag.listName, "Selecteaza Grupa")      
                         <span asp-validation-for="Group" class="text-danger"></span>
                     </div>
                     <div class="col-3">
@@ -36,8 +36,7 @@
                         <span asp-validation-for="BirthDate" class="text-danger"></span>
                     </div>
                     <div class="col-3">
-                        <input asp-for="InSchool">
-                        <span asp-validation-for="InSchool" class="text-danger"></span>
+                        @Html.CheckBoxFor(model => model.InSchool, htmlAttributes: new { @checked = true })
                     </div>
                 </div>
             </div>

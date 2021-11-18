@@ -12,10 +12,8 @@ namespace AlbaCaZapada.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Grupa obligatorie")]
-        [DisplayName("Grupa")]
         public string GroupName { get; set; }
 
-        public virtual List<Student> Students { get; set; }
+        public virtual ICollection<Student> Students { get; set; }
     }
 }
