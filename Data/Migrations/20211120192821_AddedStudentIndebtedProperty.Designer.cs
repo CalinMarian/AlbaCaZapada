@@ -4,14 +4,16 @@ using AlbaCaZapada.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlbaCaZapada.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211120192821_AddedStudentIndebtedProperty")]
+    partial class AddedStudentIndebtedProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,8 +49,13 @@ namespace AlbaCaZapada.Data.Migrations
                     b.Property<int>("DaysInSchool")
                         .HasColumnType("int");
 
+                    b.Property<int>("DaysOutSchool")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Indebted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Month")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("PaymentDate")
@@ -73,9 +80,6 @@ namespace AlbaCaZapada.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("Balance")
-                        .HasColumnType("float");
 
                     b.Property<string>("Details")
                         .HasColumnType("nvarchar(max)");

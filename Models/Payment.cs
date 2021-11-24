@@ -13,21 +13,34 @@ namespace AlbaCaZapada.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Suma obligatorie")]
+        public int Fee = 10;
+
+        //[Required(ErrorMessage = "Suma obligatorie")]
         [DisplayName("Suma (RON)")]
         public double Amount { get; set; }
         
-        [Required(ErrorMessage = "Data obligatorie")]
+        //[Required(ErrorMessage = "Data obligatorie")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [DisplayName("Data platii")]
         public DateTime PaymentDate { get; set; }
 
-        [DisplayName("Nr. Zile Prezenta")]
+        [Required(ErrorMessage = "Luna obligatorie")]
+        [DisplayName("Luna")]
+        public string Month { get; set; }
+
+        [Required(ErrorMessage = "Zile obligatorii")]
+        [DisplayName("Zile lucratoare")]
+        public int WorkingDaysInMonth { get; set; }
+
+        [DisplayName("Zile Prezenta")]
         public int DaysInSchool { get; set; }
 
-        [DisplayName("Nr. Zile Absenta")]
-        public int DaysOutSchool { get; set; }
+        [DisplayName("Zile Absenta")]
+        public int DaysOutSchool 
+        { 
+            get { return WorkingDaysInMonth - DaysInSchool; } 
+        }
 
         [ForeignKey("Student")]
         public int StudentId { get; set; }
@@ -35,4 +48,5 @@ namespace AlbaCaZapada.Models
         public virtual Student Student { get; set; }
 
     }
+
 }

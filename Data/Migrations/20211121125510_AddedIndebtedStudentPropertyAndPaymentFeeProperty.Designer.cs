@@ -4,14 +4,16 @@ using AlbaCaZapada.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlbaCaZapada.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211121125510_AddedIndebtedStudentPropertyAndPaymentFeeProperty")]
+    partial class AddedIndebtedStudentPropertyAndPaymentFeeProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,6 +49,9 @@ namespace AlbaCaZapada.Data.Migrations
                     b.Property<int>("DaysInSchool")
                         .HasColumnType("int");
 
+                    b.Property<int>("DaysOutSchool")
+                        .HasColumnType("int");
+
                     b.Property<string>("Month")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -55,6 +60,9 @@ namespace AlbaCaZapada.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SumOfPayments")
                         .HasColumnType("int");
 
                     b.Property<int>("WorkingDaysInMonth")
@@ -73,9 +81,6 @@ namespace AlbaCaZapada.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("Balance")
-                        .HasColumnType("float");
 
                     b.Property<string>("Details")
                         .HasColumnType("nvarchar(max)");

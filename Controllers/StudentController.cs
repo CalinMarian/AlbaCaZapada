@@ -20,13 +20,6 @@ namespace AlbaCaZapada.Controllers
             _db = db;
         }
 
-        //public IActionResult Index()
-        //{
-        //    IEnumerable<Student> objList = _db.Students;
-
-        //    return View(objList);
-        //}
-
         [HttpGet]
         public async Task<IActionResult> Index(string sortOrder, string search)
         {
@@ -39,6 +32,12 @@ namespace AlbaCaZapada.Controllers
                 sortedStudents = sortedStudents.Where(x => x.Name.Contains(search));
             }
             sortedStudents = sortedStudents.OrderBy(s => s.Name);
+
+            foreach (var stud in sortedStudents)
+            {
+                List<Payment> payments = _db.Payments.Where(x => x.StudentId == stud.Id).ToList();
+            }
+            
             return View(await sortedStudents.AsNoTracking().ToListAsync());
         }
 
@@ -64,21 +63,9 @@ namespace AlbaCaZapada.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddStudent(Student obj)
         {
-            var group = _db.Groups.Find(obj.GroupId);
-            var newStudent = new Student()
-            {
-                Name = obj.Name,
-                BirthDate = obj.BirthDate,
-                FirstParent = obj.FirstParent,
-                SecondParent = obj.SecondParent,
-                Details = obj.Details,
-                InSchool = obj.InSchool,
-                GroupId = obj.GroupId,
-                Group = _db.Groups.Find(obj.Id)
-            };
             if (ModelState.IsValid)
             {
-                _db.Students.Add(newStudent);
+                _db.Students.Add(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -88,7 +75,18 @@ namespace AlbaCaZapada.Controllers
         //GET EditStudent
         public IActionResult EditStudent(int Id)
         {
-            var obj = _db.Students.Find(Id);
+            var obj = _db.Students.Include(x => x.Group).FirstOrDefault(x => x.Id == Id);
+            IEnumerable<SelectListItem> GetSelectListItems()
+            {
+                return _db.Groups.Select(c => new SelectListItem()
+                {
+                    Text = c.GroupName,
+                    Value = c.Id.ToString(),
+                    Selected = true
+                });
+            };
+            ViewBag.Name = GetSelectListItems();
+
             if (obj == null)
             {
                 return NotFound();
@@ -116,7 +114,7 @@ namespace AlbaCaZapada.Controllers
 
         public IActionResult DetailsStudent(int Id)
         {
-            var obj = _db.Students.Find(Id);
+            var obj = _db.Students.Include(x => x.Group).FirstOrDefault(x=>x.Id==Id);
             if (obj == null)
             {
                 return NotFound();

@@ -15,9 +15,6 @@
                         @Html.LabelFor(x => x.Group)
                     </div>
                     <div class="col-3">
-                        <label asp-for="BirthDate"></label>
-                    </div>
-                    <div class="col-3">
                         <label asp-for="InSchool"></label>
                     </div>
                 </div>
@@ -30,10 +27,6 @@
                     <div class="col-3">
                         @Html.DropDownList("GroupId", (IEnumerable<SelectListItem>)ViewBag.listName, "Selecteaza Grupa")      
                         <span asp-validation-for="Group" class="text-danger"></span>
-                    </div>
-                    <div class="col-3">
-                        <input asp-for="BirthDate" type="date" asp-format="{dd-MM-yyyy}" class="form-control">
-                        <span asp-validation-for="BirthDate" class="text-danger"></span>
                     </div>
                     <div class="col-3">
                         @Html.CheckBoxFor(model => model.InSchool, htmlAttributes: new { @checked = true })

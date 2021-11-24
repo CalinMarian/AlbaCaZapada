@@ -11,7 +11,8 @@ namespace AlbaCaZapada.Models
     {
         [Key]
         public int Id { get; set; }
-
+        
+        [DisplayName("Nume grupa")]
         public string GroupName { get; set; }
 
         public virtual ICollection<Student> Students { get; set; }

@@ -1,11 +1,13 @@
 ﻿@model AlbaCaZapada.Models.Payment
 
-<form method="post" asp-action="AddPayment">
+<form method="post" asp-action="AddNewMonthCharge">
     <div class="container p-3">
         <div class="row pt-4">
-            <div class="col-6">
-                <h2 class="text-black-50">Adauga plata pt</h2>
-                <h1>@ViewData["StudentName"]</h1>
+            <div class="col-10">
+                <h2 class="text-black-50">Adauga "Luna" noua cu zilele lucratoare corespunzatoare.</h2>
+                <h4 class="text-black-50">(dupa salvare, toti elevii din gradinita vor fi restanti pt. aceasta luna</h4>
+                <h4 class="text-black-50">cu valoarea inmultirii TAXEI (10 RON) cu ZILELE LUCRATOARE)</h4>
+
             </div>
         </div>
         <div class="row">
@@ -17,15 +19,6 @@
                     <div class="col-2">
                         <label asp-for="WorkingDaysInMonth"></label>
                     </div>
-                    <div class="col-2">
-                        <label asp-for="DaysInSchool"></label>
-                    </div>
-                    <div class="col-2">
-                        <label asp-for="PaymentDate"></label>
-                    </div>
-                    <div class="col-2">
-                        <label asp-for="Amount"></label>
-                    </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-4">
@@ -36,23 +29,14 @@
                         <input asp-for="WorkingDaysInMonth" class="form-control">
                         <span asp-validation-for="WorkingDaysInMonth" class="text-danger"></span>
                     </div>
-                    <div class="col-2">
-                        <input asp-for="DaysInSchool" class="form-control">
-                    </div>
-                    <div class="col-2">
-                        <input asp-for="PaymentDate" class="form-control">
-                    </div>
-                    <div class="col-2">
-                        <input asp-for="Amount" class="form-control">
-                    </div>
                 </div>
                 <p></p>
                 <div class="form-group row">
                     <div class="col-6">
-                        <input type="submit" class="btn btn-success" value="Salveaza plata">
+                        <input type="submit" class="btn btn-success" value="Salveaza">
                     </div>
                     <div class="col-6">
-                        <a class="btn btn-danger fa-pull-right" asp-action="Index" asp-route-id="@ViewData["StudentId"]">Inapoi</a>
+                        <a class="btn btn-danger fa-pull-right" asp-controller="Home" asp-action="Index" >Anuleaza</a>
                     </div>
                 </div>
             </div>

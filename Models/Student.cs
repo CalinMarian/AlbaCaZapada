@@ -21,9 +21,9 @@ namespace AlbaCaZapada.Models
         public string Name { get; set; }
 
         //[Required(ErrorMessage = "Data nasterii obligatorie")]
-        [DataType(DataType.Date)]
-        [DisplayName("Data Nasterii")]
-        public DateTime? BirthDate { get; set; }
+        //[DataType(DataType.Date)]
+        //[DisplayName("Data Nasterii")]
+        //public DateTime? BirthDate { get; set; }
 
         [DisplayName("Parinte 1")]
         public string FirstParent { get; set; }
@@ -37,7 +37,9 @@ namespace AlbaCaZapada.Models
         [DisplayName("Actualmente in gradinita")]
         public bool InSchool { get; set; }
 
-        public virtual List<Payment> Payments { get; set; }
+        public virtual ICollection<Payment> Payments { get; set; }
+        public bool Indebted { get; set; } = false;
+        public double Balance { get; set; } = 0;
 
         [ForeignKey("Gruop")]
         public int GroupId { get; set; }

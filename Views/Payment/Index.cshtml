@@ -3,12 +3,13 @@
 <form method="get" asp-action="Index">
     <div class="container p-3">
         <div class="row pt-4">
-            <div class="col-6">
+            <div class="col-4">
                 <h2 class="text-primary text-black-50">Taxa scolarizare pt:</h2>
                 <h1>@ViewData["StudentName"]</h1>
             </div>
-            <div class="col-6 text-right">
+            <div class="col-8">
                 <a class="btn btn-success fa-pull-right fas fa-plus" asp-controller="Payment" asp-action="AddPayment" asp-route-Id="@ViewData["StudentId"]">Adauga plata</a>
+                <h3 class="fa-pull-right">Balanta: @ViewData["Ballance"] RON</h3>
             </div>
         </div>
         <br />
@@ -18,10 +19,10 @@
                 <thead>
                     <tr>
                         <th>
-                            Suma (RON)
+                            Luna
                         </th>
                         <th>
-                            Data platii
+                            Zile lucratoare
                         </th>
                         <th>
                             Zile Prezenta
@@ -29,19 +30,26 @@
                         <th>
                             Zile Absenta
                         </th>
+                        <th>
+                            Data platii
+                        </th>
+                        <th>
+                            Suma (RON)
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var payment in Model)
                     {
                         <tr>
-                            <td width="30%">@payment.Amount</td>
-                            <td width="30%">@payment.PaymentDate.ToString("dd/MM/yyyy")</td>
-                            <td width="15%">@payment.DaysInSchool</td>
-                            <td width="15%">@payment.DaysOutSchool</td>
-                            <td width="10%">
+                            <td width="30%">@payment.Month.ToString()</td>
+                            <td width="10%">@payment.WorkingDaysInMonth</td>
+                            <td width="10%">@payment.DaysInSchool</td>
+                            <td width="10%">@payment.DaysOutSchool</td>
+                            <td width="10%">@payment.PaymentDate.ToString("dd/MM/yyyy")</td>
+                            <td width="10%">@payment.Amount</td>
+                            <td width="20%" class="col-6 text-center">
                                 <a class="btn btn-warning" asp-controller="Payment" asp-action="EditPayment" asp-route-Id="@payment.Id">Actualizeaza</a>
-                            </td>
                         </tr>
                     }
                 </tbody>
