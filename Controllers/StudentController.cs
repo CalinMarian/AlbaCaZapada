@@ -45,16 +45,7 @@ namespace AlbaCaZapada.Controllers
         public IActionResult AddStudent()
         {
             var groups = _db.Groups.ToList();
-
-            IEnumerable<SelectListItem> GetSelectListItems()
-            {
-                return _db.Groups.Select(c => new SelectListItem()
-                {
-                    Text = c.GroupName,
-                    Value = c.Id.ToString(),
-                });
-            };
-            ViewBag.listName = GetSelectListItems();
+            ViewBag.listName = GetGroupSelectListItems();
             return View();
         }
 
@@ -76,16 +67,7 @@ namespace AlbaCaZapada.Controllers
         public IActionResult EditStudent(int Id)
         {
             var obj = _db.Students.Include(x => x.Group).FirstOrDefault(x => x.Id == Id);
-            IEnumerable<SelectListItem> GetSelectListItems()
-            {
-                return _db.Groups.Select(c => new SelectListItem()
-                {
-                    Text = c.GroupName,
-                    Value = c.Id.ToString(),
-                    Selected = true
-                });
-            };
-            ViewBag.Name = GetSelectListItems();
+            ViewBag.listName = GetGroupSelectListItems();
 
             if (obj == null)
             {
@@ -143,6 +125,17 @@ namespace AlbaCaZapada.Controllers
             sortedStudents = sortedStudents.OrderBy(s => s.Name);
             return View(await sortedStudents.AsNoTracking().ToListAsync());
         }
+
+        public IEnumerable<SelectListItem> GetGroupSelectListItems()
+        {
+            return _db.Groups.Select(c => new SelectListItem()
+            {
+                Text = c.GroupName,
+                Value = c.Id.ToString(),
+            });
+        }
+
+
 
         //GET DeleteStudent
         //public IActionResult DeleteStudent(int Id)

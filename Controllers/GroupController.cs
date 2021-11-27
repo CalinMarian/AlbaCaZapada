@@ -1,6 +1,7 @@
 ﻿using AlbaCaZapada.Data;
 using AlbaCaZapada.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -58,7 +59,7 @@ namespace AlbaCaZapada.Controllers
             return View(obj);
         }
 
-        //GET EditStudent
+        //GET EditGroup
         public IActionResult EditGroup(int Id)
         {
             var obj = _db.Groups.Find(Id);
@@ -83,5 +84,6 @@ namespace AlbaCaZapada.Controllers
             }
             return View(obj);
         }
+
     }
 }

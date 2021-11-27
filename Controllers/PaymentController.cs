@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AlbaCaZapada.View_Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 
 namespace AlbaCaZapada.Controllers
 {
@@ -129,74 +130,31 @@ namespace AlbaCaZapada.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //GET IndeptedPayment
-        public IActionResult IndeptedStudents()
+        //Get GroupDropdownForIndeptedStudents
+        public IActionResult IndeptedStudentsByGroup()
         {
-            var group = _db.Groups.ToList();
-            IEnumerable<SelectListItem> GetSelectListItems()
+            var model = new StudentPaymentViewModel()
             {
-                return _db.Groups.Select(c => new SelectListItem()
+                Groups = _db.Groups.Select(c => new SelectListItem()
                 {
                     Text = c.GroupName,
                     Value = c.Id.ToString(),
-                    Selected = true
-                });
+                }),
+                Students = Enumerable.Empty<Student>(),
+                Payments = Enumerable.Empty<Payment>()
             };
-            ViewBag.Name = GetSelectListItems();
-
-
-
-            var students = _db.Students.Where(x=>x.InSchool == true).ToList();
-            List<Student> allStudents = new List<Student>();
-            foreach (var student in students)
-            {
-                allStudents.Add(new Student()
-                {
-                    Id = student.Id,
-                    Name = student.Name,
-                    Group = student.Group,
-                    Indebted = student.Indebted,
-                    Balance = student.Balance
-                });
-            }
-
-            var payments = _db.Payments.ToList();
-            List<Payment> allPayments = new List<Payment>();
-            foreach (var payment in payments)
-            {
-                allPayments.Add(new Payment()
-                {
-                    Amount = payment.Amount,
-                    Fee = payment.Fee,
-                    DaysInSchool = payment.DaysInSchool,
-                    StudentId = payment.StudentId
-                });
-            }
-
-            List<Student> indepted = new List<Student>();
-
-            foreach (var student in allStudents)
-            {
-                var newPayment = allPayments.FindAll(x => x.StudentId == student.Id);
-                var totalDaysInSchool = newPayment.Sum(x => x.DaysInSchool);
-                var totalAmount = newPayment.Sum(x => x.Amount);
-                var balance = totalAmount - (totalDaysInSchool * 10);
-                if (balance < 0)
-                {
-                    student.Indebted = true;
-                    student.Balance = balance;
-                    indepted.Add(student);
-                }
-            }
-
-            var StudentPaymentViewModel = new StudentPaymentViewModel()
-            {
-                Students = indepted,
-                Payments = allPayments
-            };
-            return View(StudentPaymentViewModel);
+            return View(model);
         }
 
+        //GetIndeptedStudents
+        public IActionResult IndeptedStudents(string group)
+        {
+            var model = new StudentPaymentViewModel()
+            {
+                Students = _db.Students.Where(m => m.GroupId == int.Parse("group"))
+            };
+            return PartialView("_IndeptedtudentsList", model);
+        }
 
 
         //GET DeletePayment

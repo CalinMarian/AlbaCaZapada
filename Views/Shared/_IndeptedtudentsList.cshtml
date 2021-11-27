@@ -1,14 +1,8 @@
 ﻿@model AlbaCaZapada.View_Models.StudentPaymentViewModel
 
 
-<div class="container p-3">
-    <div class="row pt-4">
-        <div class="col-4">
-            <h2 class="text-primary text-black-50">Restantieri: @Model.Students.Count</h2>
-        </div>
-    </div>
-    <br />
-    @if (Model.Students.Count > 0)
+<div id="IndeptedStudentsList" class="container p-3">
+    @if (Model.Students.Count() > 0)
     {
         <table class="table table-bordered table-striped" style="width:100%">
             <tr class="text-center">
@@ -40,7 +34,7 @@
 
     else
     {
-        <p>Nici un rezultat !</p>
+        <p>Nici un elev nu e restant !</p>
     }
 
 </div>

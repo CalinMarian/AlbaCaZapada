@@ -15,11 +15,9 @@ namespace AlbaCaZapada.Models
 
         public int Fee = 10;
 
-        //[Required(ErrorMessage = "Suma obligatorie")]
         [DisplayName("Suma (RON)")]
         public double Amount { get; set; }
         
-        //[Required(ErrorMessage = "Data obligatorie")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [DisplayName("Data platii")]
