@@ -28,22 +28,51 @@
             <thead>
                 <tr>
                     <th>
-                        Nume Grupa
+                        <h2 class="text-black pl-3">Active</h2>
                     </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var group in Model)
                 {
+                    @if (group.IsActive == true)
+                    {
                     <tr>
                         <td width="80%">@group.GroupName</td>
                         <td width="20%" class="col-6 text-center">
                             <a class="btn btn-warning" asp-controller="Group" asp-action="EditGroup" asp-route-Id="@group.Id">Actualizeaza</a>
                         </td>
                     </tr>
+                    }
                 }
             </tbody>
         </table>
+
+        <table class="table table-bordered table-striped" style="width:100%">
+            <tr class="text-center">
+            <thead>
+                <tr>
+                    <th>
+                        <h2 class="text-black pl-3">Inactive</h2>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var group in Model)
+                {
+                    @if (group.IsActive == false)
+                    {
+                    <tr>
+                        <td width="80%">@group.GroupName</td>
+                        <td width="20%" class="col-6 text-center">
+                            <a class="btn btn-warning" asp-controller="Group" asp-action="EditGroup" asp-route-Id="@group.Id">Actualizeaza</a>
+                        </td>
+                    </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
     }
 
     else

@@ -26,7 +26,9 @@
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="col-3">
-                        @Html.DropDownList("GroupId", (IEnumerable<SelectListItem>)ViewBag.Name, new {AddHtmlAttributeValue = true })
+                        @*@Html.DropDownList("GroupId", (IEnumerable<SelectListItem>)ViewBag.Name, new { AddHtmlAttributeValue = true })
+                        <span asp-validation-for="Group" class="text-danger"></span>*@
+                        @Html.DropDownList("GroupId", (IEnumerable<SelectListItem>)ViewBag.listName, "Selecteaza Grupa")
                         <span asp-validation-for="Group" class="text-danger"></span>
                     </div>
                     <div class="col-3">

@@ -15,6 +15,9 @@ namespace AlbaCaZapada.Models
         [DisplayName("Nume grupa")]
         public string GroupName { get; set; }
 
+        [DisplayName("Grupa activa")]
+        public bool IsActive { get; set; }
+
         public virtual ICollection<Student> Students { get; set; }
     }
 }

@@ -42,7 +42,7 @@
                 {
                     <tr>
                         <td width="35%">@student.Name</td>
-                        <td width="15%">@student.Group</td>
+                        <td width="30%">@student.Group.GroupName</td>
                         <td width="15%">@Html.ActionLink("Detalii", "DetailsStudent", "Student", new { id = student.Id }, null)</td>
                         <td width="15%">@Html.ActionLink("Istoric Plati", "Index", "Payment", new { id = student.Id }, null)</td>
                         <td width="20%" class="col-6 text-center">

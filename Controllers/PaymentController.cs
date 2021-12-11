@@ -130,7 +130,7 @@ namespace AlbaCaZapada.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //Get GroupDropdownForIndeptedStudents
+        //Get GroupForIndeptedStudents
         public IActionResult IndeptedStudentsByGroup()
         {
             var model = new StudentPaymentViewModel()
@@ -146,15 +146,32 @@ namespace AlbaCaZapada.Controllers
             return View(model);
         }
 
+
         //GetIndeptedStudents
-        public IActionResult IndeptedStudents(string group)
-        {
-            var model = new StudentPaymentViewModel()
-            {
-                Students = _db.Students.Where(m => m.GroupId == int.Parse("group"))
-            };
-            return PartialView("_IndeptedtudentsList", model);
-        }
+        //[HttpPost]
+        //public IActionResult IndeptedStudentsByGroup(string group)
+        //{
+        //    var model = new StudentPaymentViewModel()
+        //    {
+        //        Students = _db.Students.Where(m => m.GroupId == int.Parse("group"))
+        //    };
+        //    return Json("_IndeptedtudentsList", model);
+        //}
+
+
+
+
+
+        //GetIndeptedStudents
+        //[HttpPost]
+        //public JsonResult IndeptedStudents(string group)
+        //{
+        //    var model = new StudentPaymentViewModel()
+        //    {
+        //        Students = _db.Students.Where(m => m.GroupId == int.Parse("group"))
+        //    };
+        //    return Json("_IndeptedtudentsList", model);
+        //}
 
 
         //GET DeletePayment

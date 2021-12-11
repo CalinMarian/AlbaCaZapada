@@ -104,25 +104,31 @@ namespace AlbaCaZapada.Controllers
             return View(obj);
         }
 
-        public IActionResult InactiveStudents()
-        {
-            IEnumerable<Student> objList = _db.Students;
-            var objListSorted = objList.Where(x => x.InSchool == false);
-            return View(objListSorted);
-        }
+        //public IActionResult InactiveStudents()
+        //{
+        //    IEnumerable<Student> objList = _db.Students;
+        //    var objListSorted = objList.Where(x => x.InSchool == false);
+        //    return View(objListSorted);
+        //}
 
         [HttpGet]
         public async Task<IActionResult> InactiveStudents(string sortOrder, string search)
         {
             ViewData["StudentSearch"] = search;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
-            var students = from x in _db.Students select x;
+            var students = from x in _db.Students.Include(x => x.Group) select x;
             var sortedStudents = students.Where(x => x.InSchool == false);
             if (!string.IsNullOrEmpty(search))
             {
                 sortedStudents = sortedStudents.Where(x => x.Name.Contains(search));
             }
             sortedStudents = sortedStudents.OrderBy(s => s.Name);
+
+            foreach (var stud in sortedStudents)
+            {
+                List<Payment> payments = _db.Payments.Where(x => x.StudentId == stud.Id).ToList();
+            }
+
             return View(await sortedStudents.AsNoTracking().ToListAsync());
         }
 
