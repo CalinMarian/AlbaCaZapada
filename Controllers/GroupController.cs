@@ -1,7 +1,6 @@
 ﻿using AlbaCaZapada.Data;
 using AlbaCaZapada.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,11 +17,11 @@ namespace AlbaCaZapada.Controllers
         {
             _db = db;
         }
-        public IActionResult Index()
-        {
-            IEnumerable<Group> objList = _db.Groups;
-            return View(objList);
-        }
+        //public IActionResult Index()
+        //{
+        //    IEnumerable<Group> objList = _db.Groups;
+        //    return View(objList);
+        //}
 
         [HttpGet]
         public async Task<IActionResult> Index(string sortOrder, string search)

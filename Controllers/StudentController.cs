@@ -1,13 +1,12 @@
 ﻿using AlbaCaZapada.Data;
 using AlbaCaZapada.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using System;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Data.Common;
 
 namespace AlbaCaZapada.Controllers
 {
@@ -37,15 +36,15 @@ namespace AlbaCaZapada.Controllers
             {
                 List<Payment> payments = _db.Payments.Where(x => x.StudentId == stud.Id).ToList();
             }
-            
+
             return View(await sortedStudents.AsNoTracking().ToListAsync());
         }
 
         //GET AddStudent
         public IActionResult AddStudent()
         {
-            var groups = _db.Groups.ToList();
-            ViewBag.listName = GetGroupSelectListItems();
+            var groups = _db.Groups.Where(x => x.IsActive == true).ToList();
+            ViewBag.listName = GetActiveGroupSelectListItems();
             return View();
         }
 
@@ -67,7 +66,7 @@ namespace AlbaCaZapada.Controllers
         public IActionResult EditStudent(int Id)
         {
             var obj = _db.Students.Include(x => x.Group).FirstOrDefault(x => x.Id == Id);
-            ViewBag.listName = GetGroupSelectListItems();
+            ViewBag.listName = GetActiveGroupSelectListItems();
 
             if (obj == null)
             {
@@ -96,20 +95,13 @@ namespace AlbaCaZapada.Controllers
 
         public IActionResult DetailsStudent(int Id)
         {
-            var obj = _db.Students.Include(x => x.Group).FirstOrDefault(x=>x.Id==Id);
+            var obj = _db.Students.Include(x => x.Group).FirstOrDefault(x => x.Id == Id);
             if (obj == null)
             {
                 return NotFound();
             }
             return View(obj);
         }
-
-        //public IActionResult InactiveStudents()
-        //{
-        //    IEnumerable<Student> objList = _db.Students;
-        //    var objListSorted = objList.Where(x => x.InSchool == false);
-        //    return View(objListSorted);
-        //}
 
         [HttpGet]
         public async Task<IActionResult> InactiveStudents(string sortOrder, string search)
@@ -132,9 +124,9 @@ namespace AlbaCaZapada.Controllers
             return View(await sortedStudents.AsNoTracking().ToListAsync());
         }
 
-        public IEnumerable<SelectListItem> GetGroupSelectListItems()
+        public IEnumerable<SelectListItem> GetActiveGroupSelectListItems()
         {
-            return _db.Groups.Select(c => new SelectListItem()
+            return _db.Groups.Where(x => x.IsActive == true).Select(c => new SelectListItem()
             {
                 Text = c.GroupName,
                 Value = c.Id.ToString(),

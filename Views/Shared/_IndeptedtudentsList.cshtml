@@ -1,40 +1,13 @@
-﻿@model AlbaCaZapada.View_Models.StudentPaymentViewModel
+﻿<div>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
 
-<div id="IndeptedStudentsList" class="container p-3">
-    @if (Model.Students.Count() > 0)
-    {
-        <table class="table table-bordered table-striped" style="width:100%">
-            <tr class="text-center">
-            <thead>
-                <tr>
-                    <th>
-                        Nume
-                    </th>
-                    <th>
-                        Restanta (RON)
-                    </th>
-                    <th>
-                        Taxa scolarizare
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var student in Model.Students)
-                {
-                    <tr>
-                        <td width="40%">@student.Name</td>
-                        <td width="30%">@student.Balance</td>
-                        <td width="30%">@Html.ActionLink("Istoric Plati", "Index", "Payment", new { id = student.Id }, null)</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
 
-    else
-    {
-        <p>Nici un elev nu e restant !</p>
-    }
+    <h1>Students</h1>
+
+    @*@Ajax.Actionlink*@
+
+
 
 </div>

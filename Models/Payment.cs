@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AlbaCaZapada.Models
 {
@@ -17,7 +14,7 @@ namespace AlbaCaZapada.Models
 
         [DisplayName("Suma (RON)")]
         public double Amount { get; set; }
-        
+
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [DisplayName("Data platii")]
@@ -35,9 +32,9 @@ namespace AlbaCaZapada.Models
         public int DaysInSchool { get; set; }
 
         [DisplayName("Zile Absenta")]
-        public int DaysOutSchool 
-        { 
-            get { return WorkingDaysInMonth - DaysInSchool; } 
+        public int DaysOutSchool
+        {
+            get { return WorkingDaysInMonth - DaysInSchool; }
         }
 
         [ForeignKey("Student")]

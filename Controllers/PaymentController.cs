@@ -1,12 +1,11 @@
 ﻿using AlbaCaZapada.Data;
 using AlbaCaZapada.Models;
+using AlbaCaZapada.View_Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using AlbaCaZapada.View_Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AlbaCaZapada.Controllers
 {
@@ -66,6 +65,8 @@ namespace AlbaCaZapada.Controllers
                     Month = obj.Month
                 };
                 _db.Payments.Add(newPayment);
+
+                UpdateStudentIndeptedValue(obj.Id);
                 _db.SaveChanges();
                 return RedirectToAction("Index", new { id = obj.Id });
             }
@@ -93,6 +94,9 @@ namespace AlbaCaZapada.Controllers
             if (ModelState.IsValid)
             {
                 _db.Payments.Update(obj).Property(x => x.StudentId).IsModified = false;
+
+                UpdateStudentIndeptedValue((int)TempData["StudentId"]);
+
                 _db.SaveChanges();
                 return RedirectToAction("Index", new { id = TempData["StudentId"] });
             }
@@ -124,27 +128,53 @@ namespace AlbaCaZapada.Controllers
                         StudentId = student.Id
                     };
                     _db.Payments.Add(newPayment);
+
+                    UpdateStudentIndeptedValue(student.Id);
                 }
                 _db.SaveChanges();
             }
             return RedirectToAction("Index", "Home");
         }
 
-        //Get GroupForIndeptedStudents
-        public IActionResult IndeptedStudentsByGroup()
+        public void UpdateStudentIndeptedValue(int objId)
         {
-            var model = new StudentPaymentViewModel()
+            var student = _db.Students.Include("Payments").FirstOrDefault(x => x.Id == objId);
+            var balance = student.Payments.Sum(x => x.Amount) - (student.Payments.Sum(x => x.DaysInSchool) * 10);
+            if (balance < 0)
             {
-                Groups = _db.Groups.Select(c => new SelectListItem()
-                {
-                    Text = c.GroupName,
-                    Value = c.Id.ToString(),
-                }),
-                Students = Enumerable.Empty<Student>(),
-                Payments = Enumerable.Empty<Payment>()
-            };
-            return View(model);
+                student.Indebted = true;
+            }
+            else { student.Indebted = false; }
+            student.Balance = balance;
+            _db.Students.Update(student);
         }
+
+        //Get IndeptedStudents
+        public IActionResult IndeptedStudents()
+        {
+            var groupWithStudents = _db.Groups.Where(x=>x.IsActive).Include("Students");
+
+            
+            return View(groupWithStudents);
+        }
+
+
+        // Get All Indepted Students
+        //public PartialViewResult AllIndeptedStudents()
+        //{
+        //    var model = new StudentPaymentViewModel()
+        //    {
+        //        Groups = _db.Groups.ToList(),
+        //        Students = _db.Students.Where(x => x.Indebted == true),
+        //        Payments = _db.Payments.ToList()
+        //    };
+
+        //    return PartialView("_IndeptedtudentsList", model);
+        //}
+
+
+
+
 
 
         //GetIndeptedStudents

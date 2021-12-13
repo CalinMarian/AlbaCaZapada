@@ -1,5 +1,3 @@
-using System;
-
 namespace AlbaCaZapada.Models
 {
     public class ErrorViewModel
