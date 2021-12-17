@@ -31,13 +31,26 @@ namespace AlbaCaZapada.Controllers
                 sortedStudents = sortedStudents.Where(x => x.Name.Contains(search));
             }
             sortedStudents = sortedStudents.OrderBy(s => s.Name);
-
-            foreach (var stud in sortedStudents)
-            {
-                List<Payment> payments = _db.Payments.Where(x => x.StudentId == stud.Id).ToList();
-            }
-
             return View(await sortedStudents.AsNoTracking().ToListAsync());
+        }
+
+        public void SetStudentBalance(int studentID)
+        {
+            var payments = _db.Payments.Include("Student").Where(x => x.StudentId == studentID).ToList();
+            var balance = payments.Sum(x => x.Amount) - payments.Sum(x => x.AmountOwed);
+            var student = new Student()
+            {
+                Id = studentID,
+                Balance = balance
+            };
+
+
+            _db.Students.Attach(student);
+            _db.Entry(student).Property(X => X.Balance).IsModified = true;
+            _db.SaveChanges();
+
+
+            payments.Count();
         }
 
         //GET AddStudent

@@ -52,7 +52,7 @@
                         <td width="20%">@student.Group.GroupName</td>
                         <td width="15%">@Html.ActionLink("Detalii", "DetailsStudent", "Student", new { id = student.Id }, null)</td>
                         <td width="10%">@student.Balance</td>
-                        <td width="15%">@Html.ActionLink("Istoric Plati", "Index", "Payment", new { id = student.Id }, null)</td>
+                        <td width="15%">@Html.ActionLink("Istoric", "Index", "Payment", new { id = student.Id }, null)</td>
                         <td width="15%" class="col-6 text-center">
                             <a class="btn btn-warning" asp-controller="Student" asp-action="EditStudent" asp-route-Id="@student.Id">Actualizeaza</a>
                             @*<a class="btn btn-danger" asp-controller="Student" asp-action="DeleteStudent" asp-route-Id="@student.Id">Sterge</a>*@

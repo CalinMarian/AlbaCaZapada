@@ -10,10 +10,13 @@ namespace AlbaCaZapada.Models
         [Key]
         public int Id { get; set; }
 
-        public int Fee = 10;
+        [Required(ErrorMessage = "Taxa obligatorii")]
+        [DisplayName("Taxa/zi")]
+        public decimal Fee { get; set; }
 
+        [Required(ErrorMessage = "Suma obligatorie")]
         [DisplayName("Suma (RON)")]
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
@@ -32,10 +35,10 @@ namespace AlbaCaZapada.Models
         public int DaysInSchool { get; set; }
 
         [DisplayName("Zile Absenta")]
-        public int DaysOutSchool
-        {
-            get { return WorkingDaysInMonth - DaysInSchool; }
-        }
+        public int DaysOutSchool { get; set; }
+
+        [DisplayName("Suma datorata")]
+        public decimal AmountOwed { get; set; }
 
         [ForeignKey("Student")]
         public int StudentId { get; set; }

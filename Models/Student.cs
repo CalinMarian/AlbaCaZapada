@@ -33,8 +33,7 @@ namespace AlbaCaZapada.Models
         public bool InSchool { get; set; }
 
         public virtual ICollection<Payment> Payments { get; set; }
-        public bool Indebted { get; set; } = false;
-        public double Balance { get; set; } = 0;
+        public decimal Balance { get; set; }
 
         [ForeignKey("Gruop")]
         public int GroupId { get; set; }

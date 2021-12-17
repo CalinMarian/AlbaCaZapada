@@ -39,13 +39,10 @@
                             <tr>
                                 <td width="30%">@student.Name</td>
                                 <td width="20%">@student.Balance</td>
-                                <td width="15%">@Html.ActionLink("Istoric Plati", "Index", "Payment", new { id = student.Id }, null)</td>
+                                <td width="15%">@Html.ActionLink("Istoric", "Index", "Payment", new { id = student.Id }, null)</td>
                             </tr>
                         }
                     }
-
-
-
                 </tbody>
             </table>
         }
@@ -53,7 +50,7 @@
 
     else
     {
-        <p>Nici un rezultat !</p>
+        <p>Nici o grupa creata inca!</p>
     }
 
 </div>

@@ -26,7 +26,7 @@ namespace AlbaCaZapada.Controllers
             ViewData["StudentName"] = student.Name;
             ViewData["StudentId"] = student.Id;
             ViewData["StudentInSchool"] = student.InSchool.ToString();
-            ViewData["Ballance"] = student.Payments.Sum(x => x.Amount) - (student.Payments.Sum(x => x.DaysInSchool) * 10);
+            ViewData["Ballance"] = student.Payments.Sum(x => x.Amount) - student.Payments.Sum(x => x.AmountOwed);
             if (student == null)
             {
                 return NotFound();
@@ -57,17 +57,22 @@ namespace AlbaCaZapada.Controllers
             {
                 Payment newPayment = new()
                 {
-                    Amount = obj.Amount,
+                    Month = obj.Month,
+                    WorkingDaysInMonth = obj.WorkingDaysInMonth,
+                    DaysInSchool = obj.DaysInSchool,
+                    DaysOutSchool = obj.WorkingDaysInMonth - obj.DaysInSchool,
                     PaymentDate = obj.PaymentDate,
                     StudentId = obj.Id,
-                    DaysInSchool = obj.DaysInSchool,
-                    WorkingDaysInMonth = obj.WorkingDaysInMonth,
-                    Month = obj.Month
+                    Amount = obj.Amount,
+                    AmountOwed = (obj.DaysInSchool * obj.Fee),
+                    Fee = obj.Fee
                 };
                 _db.Payments.Add(newPayment);
-
-                UpdateStudentIndeptedValue(obj.Id);
                 _db.SaveChanges();
+
+                UpdateStudentBalanceValue(obj.Id);
+                _db.SaveChanges();
+
                 return RedirectToAction("Index", new { id = obj.Id });
             }
             return View(obj);
@@ -76,9 +81,8 @@ namespace AlbaCaZapada.Controllers
         //GET EditPayment
         public IActionResult EditPayment(int Id)
         {
-            var obj = _db.Payments.Find(Id);
-            ViewData["StudentId"] = obj.StudentId;
-            TempData["StudentId"] = obj.StudentId;
+            var obj = _db.Payments.FirstOrDefault(x => x.Id == Id);
+            ViewData["StudentId"] = TempData["StudentId"] = obj.StudentId;
             if (obj == null)
             {
                 return NotFound();
@@ -93,10 +97,26 @@ namespace AlbaCaZapada.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Payments.Update(obj).Property(x => x.StudentId).IsModified = false;
 
-                UpdateStudentIndeptedValue((int)TempData["StudentId"]);
+                Payment editedPayment = new()
+                {
+                    Id = obj.Id,
+                    Month = obj.Month,
+                    WorkingDaysInMonth = obj.WorkingDaysInMonth,
+                    DaysInSchool = obj.DaysInSchool,
+                    DaysOutSchool = obj.WorkingDaysInMonth - obj.DaysInSchool,
+                    PaymentDate = obj.PaymentDate,
+                    Amount = obj.Amount,
+                    AmountOwed = (obj.DaysInSchool * obj.Fee),
+                    Fee = obj.Fee,
+                    StudentId = (int)TempData["StudentId"]
+                };
 
+                _db.Payments.Update(editedPayment);
+                _db.SaveChanges();
+
+                UpdateStudentBalanceValue((int)TempData["StudentId"]);
+                
                 _db.SaveChanges();
                 return RedirectToAction("Index", new { id = TempData["StudentId"] });
             }
@@ -116,7 +136,7 @@ namespace AlbaCaZapada.Controllers
         {
             if (ModelState.IsValid)
             {
-                var students = _db.Students.ToList();
+                var students = _db.Students.Where(x => x.InSchool == true).ToList();
                 foreach (var student in students)
                 {
                     Payment newPayment = new()
@@ -124,85 +144,40 @@ namespace AlbaCaZapada.Controllers
                         Month = obj.Month,
                         WorkingDaysInMonth = obj.WorkingDaysInMonth,
                         DaysInSchool = obj.WorkingDaysInMonth,
+                        DaysOutSchool = obj.WorkingDaysInMonth - obj.WorkingDaysInMonth,
                         PaymentDate = System.DateTime.Today,
-                        StudentId = student.Id
+                        StudentId = student.Id,
+                        Amount = 0,
+                        AmountOwed = obj.WorkingDaysInMonth * obj.Fee,
+                        Fee = obj.Fee
                     };
                     _db.Payments.Add(newPayment);
-
-                    UpdateStudentIndeptedValue(student.Id);
+                    _db.SaveChanges();
+                    
+                    UpdateStudentBalanceValue(student.Id);
                 }
                 _db.SaveChanges();
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Student");
         }
 
-        public void UpdateStudentIndeptedValue(int objId)
+        public void UpdateStudentBalanceValue(int objId)
         {
-            var student = _db.Students.Include("Payments").FirstOrDefault(x => x.Id == objId);
-            var balance = student.Payments.Sum(x => x.Amount) - (student.Payments.Sum(x => x.DaysInSchool) * 10);
-            if (balance < 0)
-            {
-                student.Indebted = true;
-            }
-            else { student.Indebted = false; }
-            student.Balance = balance;
+            var allPayments = _db.Payments.Where(x => x.StudentId == objId);
+
+            var student = _db.Students.Find(objId);
+
+            student.Balance = allPayments.Sum(x => x.Amount) - allPayments.Sum(x => x.AmountOwed);
+
             _db.Students.Update(student);
         }
 
         //Get IndeptedStudents
         public IActionResult IndeptedStudents()
         {
-            var groupWithStudents = _db.Groups.Where(x=>x.IsActive).Include("Students");
-
-            
+            var groupWithStudents = _db.Groups.Where(x => x.IsActive).Include("Students");
             return View(groupWithStudents);
         }
-
-
-        // Get All Indepted Students
-        //public PartialViewResult AllIndeptedStudents()
-        //{
-        //    var model = new StudentPaymentViewModel()
-        //    {
-        //        Groups = _db.Groups.ToList(),
-        //        Students = _db.Students.Where(x => x.Indebted == true),
-        //        Payments = _db.Payments.ToList()
-        //    };
-
-        //    return PartialView("_IndeptedtudentsList", model);
-        //}
-
-
-
-
-
-
-        //GetIndeptedStudents
-        //[HttpPost]
-        //public IActionResult IndeptedStudentsByGroup(string group)
-        //{
-        //    var model = new StudentPaymentViewModel()
-        //    {
-        //        Students = _db.Students.Where(m => m.GroupId == int.Parse("group"))
-        //    };
-        //    return Json("_IndeptedtudentsList", model);
-        //}
-
-
-
-
-
-        //GetIndeptedStudents
-        //[HttpPost]
-        //public JsonResult IndeptedStudents(string group)
-        //{
-        //    var model = new StudentPaymentViewModel()
-        //    {
-        //        Students = _db.Students.Where(m => m.GroupId == int.Parse("group"))
-        //    };
-        //    return Json("_IndeptedtudentsList", model);
-        //}
-
 
         //GET DeletePayment
         //public IActionResult DeletePayment(int id)
