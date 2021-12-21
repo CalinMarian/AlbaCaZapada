@@ -1,5 +1,12 @@
 ﻿@model List<AlbaCaZapada.Models.Student>
 
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong></strong> @TempData["AlertMessage"]
+    </div>
+}
+
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-4">
@@ -55,7 +62,7 @@
                         <td width="15%">@Html.ActionLink("Istoric", "Index", "Payment", new { id = student.Id }, null)</td>
                         <td width="15%" class="col-6 text-center">
                             <a class="btn btn-warning" asp-controller="Student" asp-action="EditStudent" asp-route-Id="@student.Id">Actualizeaza</a>
-                            @*<a class="btn btn-danger" asp-controller="Student" asp-action="DeleteStudent" asp-route-Id="@student.Id">Sterge</a>*@
+
                         </td>
                     </tr>
                 }

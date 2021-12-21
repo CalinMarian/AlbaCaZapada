@@ -69,6 +69,7 @@ namespace AlbaCaZapada.Controllers
                 };
                 _db.Payments.Add(newPayment);
                 _db.SaveChanges();
+                TempData["AlertMessage"] = "Plata adaugata cu succes!";
 
                 UpdateStudentBalanceValue(obj.Id);
                 _db.SaveChanges();
@@ -116,8 +117,9 @@ namespace AlbaCaZapada.Controllers
                 _db.SaveChanges();
 
                 UpdateStudentBalanceValue((int)TempData["StudentId"]);
-                
+
                 _db.SaveChanges();
+                TempData["AlertMessage"] = "Plata modificata cu succes!";
                 return RedirectToAction("Index", new { id = TempData["StudentId"] });
             }
             return View(obj);
@@ -153,10 +155,11 @@ namespace AlbaCaZapada.Controllers
                     };
                     _db.Payments.Add(newPayment);
                     _db.SaveChanges();
-                    
+                    TempData["AlertMessage"] = "Taxa adaugata cu succes pt fiecare elev din gradinita!";
                     UpdateStudentBalanceValue(student.Id);
                 }
                 _db.SaveChanges();
+                TempData["AlertMessage"] = "Taxa adaugata cu succes pt fiecare elev din gradinita!";
             }
             return RedirectToAction("Index", "Student");
         }

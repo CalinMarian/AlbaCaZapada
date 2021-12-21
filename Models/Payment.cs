@@ -18,6 +18,7 @@ namespace AlbaCaZapada.Models
         [DisplayName("Suma (RON)")]
         public decimal Amount { get; set; }
 
+        [Required(ErrorMessage = "Data platii este obligatorie")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [DisplayName("Data platii")]

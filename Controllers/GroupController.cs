@@ -53,6 +53,7 @@ namespace AlbaCaZapada.Controllers
             {
                 _db.Groups.Add(obj);
                 _db.SaveChanges();
+                TempData["AlertMessage"] = "Noua grupa adaugata cu sucess!";
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -78,6 +79,7 @@ namespace AlbaCaZapada.Controllers
             {
                 _db.Groups.Update(obj);
                 _db.SaveChanges();
+                TempData["AlertMessage"] = "Grupa actualizata cu sucess!";
                 return RedirectToAction("Index");
 
             }

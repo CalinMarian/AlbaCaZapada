@@ -1,5 +1,12 @@
 ﻿@model IEnumerable<AlbaCaZapada.Models.Group>
 
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong></strong> @TempData["AlertMessage"]
+    </div>
+}
+
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-4">
@@ -37,12 +44,12 @@
                 {
                     @if (group.IsActive == true)
                     {
-                    <tr>
-                        <td width="80%">@group.GroupName</td>
-                        <td width="20%" class="col-6 text-center">
-                            <a class="btn btn-warning" asp-controller="Group" asp-action="EditGroup" asp-route-Id="@group.Id">Actualizeaza</a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td width="80%">@group.GroupName</td>
+                            <td width="20%" class="col-6 text-center">
+                                <a class="btn btn-warning" asp-controller="Group" asp-action="EditGroup" asp-route-Id="@group.Id">Actualizeaza</a>
+                            </td>
+                        </tr>
                     }
                 }
             </tbody>
@@ -62,12 +69,12 @@
                 {
                     @if (group.IsActive == false)
                     {
-                    <tr>
-                        <td width="80%">@group.GroupName</td>
-                        <td width="20%" class="col-6 text-center">
-                            <a class="btn btn-warning" asp-controller="Group" asp-action="EditGroup" asp-route-Id="@group.Id">Actualizeaza</a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td width="80%">@group.GroupName</td>
+                            <td width="20%" class="col-6 text-center">
+                                <a class="btn btn-warning" asp-controller="Group" asp-action="EditGroup" asp-route-Id="@group.Id">Actualizeaza</a>
+                            </td>
+                        </tr>
                     }
                 }
             </tbody>

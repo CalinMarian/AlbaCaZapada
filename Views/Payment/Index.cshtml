@@ -1,5 +1,12 @@
 ﻿@model IEnumerable<AlbaCaZapada.Models.Payment>
 
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong></strong> @TempData["AlertMessage"]
+    </div>
+}
+
 <form method="get" asp-action="Index">
     <div class="container p-3">
         <div class="row pt-4">

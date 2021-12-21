@@ -70,6 +70,7 @@ namespace AlbaCaZapada.Controllers
             {
                 _db.Students.Add(obj);
                 _db.SaveChanges();
+                TempData["AlertMessage"] = "Nou elev adaugat cu sucess!";
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -96,7 +97,9 @@ namespace AlbaCaZapada.Controllers
             if (ModelState.IsValid)
             {
                 _db.Students.Update(obj);
+                UpdateStudentBalanceValue(obj.Id);
                 _db.SaveChanges();
+                TempData["AlertMessage"] = "Elev actualizat cu sucess!";
                 if (obj.InSchool == true)
                 {
                     return RedirectToAction("Index");
@@ -146,6 +149,16 @@ namespace AlbaCaZapada.Controllers
             });
         }
 
+        public void UpdateStudentBalanceValue(int objId)
+        {
+            var allPayments = _db.Payments.Where(x => x.StudentId == objId);
+
+            var student = _db.Students.Find(objId);
+
+            student.Balance = allPayments.Sum(x => x.Amount) - allPayments.Sum(x => x.AmountOwed);
+
+            _db.Students.Update(student);
+        }
 
 
         //GET DeleteStudent
