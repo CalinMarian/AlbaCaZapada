@@ -45,16 +45,15 @@
                                 </tr>
                             }
                         }
-
                     }
-                    <tr>
+                    @*<tr>
                         <th>
-                            <h3>Restantieri: @group.Students.Count(x=>x.InSchool == true) </h3>
+                            <h3>Restantieri: @group.Students.Count((x=>x.InSchool == true));</h3>
                         </th>
                         <th>
                             <h3>Total: @group.Students.Sum(x => x.Balance)</h3>
                         </th>
-                    </tr>
+                    </tr>*@
                 </tbody>
             </table>
         }
