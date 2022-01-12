@@ -86,5 +86,21 @@ namespace AlbaCaZapada.Controllers
             return View(obj);
         }
 
+        //POST DeleteGroup
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteGroup(Group obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Groups.Update(obj);
+                _db.SaveChanges();
+                TempData["AlertMessage"] = "Grupa actualizata cu sucess!";
+                return RedirectToAction("Index");
+
+            }
+            return View(obj);
+        }
+
     }
 }

@@ -36,24 +36,21 @@
                     {
                         @if (student.InSchool == true)
                         {
-                            @if (student.Balance < 0)
-                            {
                                 <tr>
                                     <td width="30%">@student.Name</td>
                                     <td width="20%">@student.Balance</td>
                                     <td width="15%">@Html.ActionLink("Istoric", "Index", "Payment", new { id = student.Id }, null)</td>
                                 </tr>
-                            }
                         }
                     }
-                    @*<tr>
-                        <th>
-                            <h3>Restantieri: @group.Students.Count((x=>x.InSchool == true));</h3>
-                        </th>
-                        <th>
-                            <h3>Total: @group.Students.Sum(x => x.Balance)</h3>
-                        </th>
-                    </tr>*@
+                <tr>
+                    <th>
+                        <h3>Elevi: @group.Students.Count((x => x.InSchool == true))</h3>
+                    </th>
+                    <th>
+                        <h3>Total: @group.Students.Sum(x => x.Balance) RON</h3>
+                    </th>
+                </tr>
                 </tbody>
             </table>
         }
