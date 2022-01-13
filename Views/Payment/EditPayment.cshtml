@@ -4,7 +4,7 @@
     <input asp-for="Id" hidden>
     <div class="border p-3">
         <div class="form-group row">
-            <h2 class="text-black-50 pl-3">Editeaza plata</h2>
+            <h2 class="text-black-50 pl-3">Editeaza plata pt @ViewData["StudentName"]</h2>
         </div>
         <div class="row">
             <div class="col-12">
@@ -47,9 +47,11 @@
                     </div>
                     <div class="col-2">
                         <input asp-for="Amount">
+                        <span asp-validation-for="Amount" class="text-danger"></span>
                     </div>
                     <div class="col-1">
                         <input asp-for="Fee">
+                        <span asp-validation-for="Fee" class="text-danger"></span>
                     </div>
                 </div>
             </div>

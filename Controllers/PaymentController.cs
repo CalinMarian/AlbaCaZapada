@@ -84,6 +84,8 @@ namespace AlbaCaZapada.Controllers
         {
             var obj = _db.Payments.FirstOrDefault(x => x.Id == Id);
             ViewData["StudentId"] = TempData["StudentId"] = obj.StudentId;
+            var student = _db.Students.Find(obj.StudentId);
+            ViewData["StudentName"] = student.Name.ToString();
             if (obj == null)
             {
                 return NotFound();
