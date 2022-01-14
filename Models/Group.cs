@@ -9,6 +9,7 @@ namespace AlbaCaZapada.Models
         [Key]
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Nume grupa obligatorie")]
         [DisplayName("Nume grupa")]
         public string GroupName { get; set; }
 
