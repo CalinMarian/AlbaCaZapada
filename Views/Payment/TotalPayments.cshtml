@@ -1,0 +1,42 @@
+﻿@model IEnumerable<AlbaCaZapada.View_Models.TotalPaymentPerMonth>
+
+<div class="container p-2">
+    <div class="row pt-4">
+        <div class="col-4">
+            <h2 class="text-primary text-black-50">Total incasari / luna</h2>
+        </div>
+
+        @*<div class="col-4">
+                <form asp-controller="Payment" asp-action="TotalPayments" method="get">
+                    <p>
+                        <input type="search" placeholder="Nume elev..." value="@ViewData["MonthSearch"]" name="Search" />
+                        <input type="submit" value="Cauta" class="btn btn-success" />
+                        <a asp-action="TotalPayments" class="btn btn-danger">Sterge</a>
+                    </p>
+                </form>
+            </div>*@
+    </div>
+    <br />
+    <table class="table table-bordered table-striped" style="width:100%">
+        <tr class="text-center">
+        <thead>
+            <tr>
+                <th>
+                    Luna
+                </th>
+                <th>
+                    Total incasari (RON)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+                @foreach (var item in Model)
+                {
+                   <tr>
+                       <td width="30%">@item.Month</td>
+                       <td width="30%">@item.TotalPayment</td>
+                    </tr>
+                }
+        </tbody>
+    </table>
+</div>

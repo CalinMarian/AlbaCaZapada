@@ -4,6 +4,7 @@ using AlbaCaZapada.View_Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -184,6 +185,40 @@ namespace AlbaCaZapada.Controllers
             return View(groupWithStudents);
         }
 
+        //Get ToatlPayments
+        public IActionResult TotalPayments()
+        {
+            List<TotalPaymentPerMonth> totalPaymentPerMonth = new List<TotalPaymentPerMonth>();
+            List<string> monthsList = new List<string>();
+            var paymentsList = _db.Payments.ToList();
+            foreach (var payment in paymentsList)      
+            {
+                if (!monthsList.Contains(payment.Month.ToString()))
+                {
+                    monthsList.Add(payment.Month.ToString());
+                }
+            }
+            List<string> sumAmountPerMonth = new List<string>();
+            foreach (var month in monthsList)
+            {
+                var allPaymenstOfMonth = paymentsList.FindAll(x => x.Month == month);
+                var totalPayments = allPaymenstOfMonth.Sum(x => x.Amount);
+                sumAmountPerMonth.Add(totalPayments.ToString());
+            }
+
+            for (int i = 0; i < monthsList.Count; i++)
+            {
+                totalPaymentPerMonth.Add(
+                new TotalPaymentPerMonth()
+                {
+                    Month = monthsList[i],
+                    TotalPayment = sumAmountPerMonth[i]
+                });
+            }
+            return View(totalPaymentPerMonth);
+        }
+
+      
         //GET DeletePayment
         //public IActionResult DeletePayment(int id)
         //{
