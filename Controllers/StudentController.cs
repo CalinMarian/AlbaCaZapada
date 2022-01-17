@@ -160,31 +160,6 @@ namespace AlbaCaZapada.Controllers
             _db.Students.Update(student);
         }
 
-
-        //GET DeleteStudent
-        //public IActionResult DeleteStudent(int Id)
-        //{
-        //    var obj = _db.Students.Find(Id);
-        //    if (obj == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(obj);
-        //}
-
-        //POST DeleteStudent
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult DeleteStudentPost(Student obj)
-        //{
-        //    _db.Students.Remove(obj);
-        //    _db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-
-        //GET DetailsStudent
-
-
     }
 }
 

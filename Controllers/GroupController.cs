@@ -17,12 +17,7 @@ namespace AlbaCaZapada.Controllers
         {
             _db = db;
         }
-        //public IActionResult Index()
-        //{
-        //    IEnumerable<Group> objList = _db.Groups;
-        //    return View(objList);
-        //}
-
+        
         [HttpGet]
         public async Task<IActionResult> Index(string sortOrder, string search)
         {
