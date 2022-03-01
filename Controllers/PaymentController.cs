@@ -87,6 +87,7 @@ namespace AlbaCaZapada.Controllers
             ViewData["StudentId"] = TempData["StudentId"] = obj.StudentId;
             var student = _db.Students.Find(obj.StudentId);
             ViewData["StudentName"] = student.Name.ToString();
+            ViewData["PaymentDate"] = obj.PaymentDate.ToString("dd-MM-yyyy");
             if (obj == null)
             {
                 return NotFound();
@@ -191,7 +192,7 @@ namespace AlbaCaZapada.Controllers
             List<TotalPaymentPerMonth> totalPaymentPerMonth = new List<TotalPaymentPerMonth>();
             List<string> monthsList = new List<string>();
             var paymentsList = _db.Payments.ToList();
-            foreach (var payment in paymentsList)      
+            foreach (var payment in paymentsList)
             {
                 if (!monthsList.Contains(payment.Month.ToString()))
                 {
@@ -218,44 +219,38 @@ namespace AlbaCaZapada.Controllers
             return View(totalPaymentPerMonth);
         }
 
-        ////GET EditMonthCharge
-        //public IActionResult EditMonthCharge()
-        //{
-        //    return View();
-        //}
 
-        ////Post EditMonthCharge
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult EditMonthCharge(Payment obj)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var students = _db.Students.Where(x => x.InSchool == true).ToList();
-        //        foreach (var student in students)
-        //        {
-        //            Payment newPayment = new()
-        //            {
-        //                Month = obj.Month,
-        //                WorkingDaysInMonth = obj.WorkingDaysInMonth,
-        //                DaysInSchool = obj.WorkingDaysInMonth,
-        //                DaysOutSchool = obj.WorkingDaysInMonth - obj.WorkingDaysInMonth,
-        //                PaymentDate = System.DateTime.Today,
-        //                StudentId = student.Id,
-        //                Amount = 0,
-        //                AmountOwed = obj.WorkingDaysInMonth * obj.Fee,
-        //                Fee = obj.Fee
-        //            };
-        //            _db.Payments.Add(newPayment);
-        //            _db.SaveChanges();
-        //            TempData["AlertMessage"] = "Taxa adaugata cu succes pt fiecare elev din gradinita!";
-        //            UpdateStudentBalanceValue(student.Id);
-        //        }
-        //        _db.SaveChanges();
-        //        TempData["AlertMessage"] = "Taxa adaugata cu succes pt fiecare elev din gradinita!";
-        //    }
-        //    return RedirectToAction("Index", "Student");
-        //}
+        //GET DeletePayment
+        public IActionResult DeletePayment(int Id)
+        {
+            var obj = _db.Payments.FirstOrDefault(x => x.Id == Id);
+            ViewData["StudentId"] = TempData["StudentId"] = obj.StudentId;
+            var student = _db.Students.Find(obj.StudentId);
+            ViewData["StudentName"] = student.Name.ToString();
+            ViewData["PaymentDate"] = obj.PaymentDate.ToString("dd-MM-yyyy");
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        //Post DeletePayment
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePayment(Payment obj)
+        {
+
+                _db.Payments.Remove(obj);
+                _db.SaveChanges();
+                TempData["AlertMessage"] = "Plata stearsa cu succes!";
+
+                UpdateStudentBalanceValue((int)TempData["StudentId"]);
+                _db.SaveChanges();
+
+                return RedirectToAction("Index", new { id = TempData["StudentId"] });
+
+        }
 
     }
 }

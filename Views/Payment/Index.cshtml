@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<AlbaCaZapada.Models.Payment>
 
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
 @if (TempData["AlertMessage"] != null)
 {
     <div class="alert alert-success">
@@ -58,8 +60,10 @@
                             <td width="10%">@payment.PaymentDate.ToString("dd/MM/yyyy")</td>
                             <td width="10%">@payment.Amount</td>
                             <td width="10%">@(payment.Amount - payment.AmountOwed)</td>
-                            <td width="20%" class="col-6 text-center">
-                                <a class="btn btn-warning" asp-controller="Payment" asp-action="EditPayment" asp-route-Id="@payment.Id">Actualizeaza</a>
+                            <td width="15%" class="col-6 text-center">
+                                <a class="btn btn-warning" asp-controller="Payment" asp-action="EditPayment" asp-route-Id="@payment.Id">Actualizeaza plata</a>
+                            <td width="5%" class="col-6 text-center">
+                                <a class="btn btn-danger" asp-controller="Payment" asp-action="DeletePayment" asp-route-Id="@payment.Id">Sterge</a>
                         </tr>
                     }
                 </tbody>
@@ -94,4 +98,15 @@
     @{
         <partial name="_ValidationScriptsPartial" />
     }
+    <script >
+        $(document).ready(function)(){
+
+        });
+
+
+    </script>
+
+
+
+
 }

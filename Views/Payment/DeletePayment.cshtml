@@ -1,48 +1,66 @@
 ﻿@model AlbaCaZapada.Models.Payment
 
-<form method="post" asp-action="DeletePaymentPost">
-    <input asp-for="@Model.Id" hidden>
-    <div class="border p-3">
-        <div class="form-group row">
-            <h2 class="text-black-50 pl-3">Sterge plata</h2>
+<form method="post" asp-action="DeletePayment">
+<input asp-for="Id" hidden>
+<div class="border p-3">
+    <div class="form-group row">
+        <div class="col-6">
+            <h2 class="text-black-50 pl-3">Sterge aceasta plata pt @ViewData["StudentName"]</h2>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="form-group row">
-                    <div class="col-6">
-                        <label asp-for="Amount"></label>
-                    </div>
-                    <div class="col-6">
-                        <label asp-for="PaymentDate"></label>
-                    </div>
+            <div class="col-6">
+                <a class="btn btn-success fa-pull-right" asp-action="Index" asp-route-id="@ViewData["StudentId"]">Inapoi</a>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Month"></label>
                 </div>
+                <div class="col-2">
+                    <label asp-for="WorkingDaysInMonth"></label>
+                </div>
+                <div class="col-2">
+                    <label asp-for="DaysInSchool"></label>
+                </div>
+                <div class="col-2">
+                    <label asp-for="PaymentDate"></label>
+                </div>
+                <div class="col-2">
+                    <label asp-for="Amount"></label>
+                </div>
+                <div class="col-1">
+                    <label asp-for="Fee"></label>
+                </div>
+            </div>
 
-                <div class="form-group row">
-                    <div class="col-6">
-                        @*<input asp-for="Amount" class="form-control">*@
-                        @Html.TextBoxFor(model => model.Amount)
-                    </div>
-                    <div class="col-6">
-                        @*<input asp-for="PaymentDate" class="form-control">*@
-                        @Html.TextBoxFor(model => model.PaymentDate, "{0:dd/MM/yyyy}")
-                    </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <input asp-for="Month" class="form-control">
                 </div>
-                <div class="form-group row">
-                    <div class="col-6">
-                        <input type="submit" class="btn btn-danger" value="Sterge">
-                    </div>
-                    <div class="col-6">
-                        <a class="btn btn-success fa-pull-right" asp-action="Index">Inapoi</a>
-                    </div>
+                <div class="col-2">
+                    <input asp-for="WorkingDaysInMonth" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input asp-for="DaysInSchool" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input asp-for="@ViewData["PaymentDate"]">
+                </div>
+                <div class="col-2">
+                    <input asp-for="Amount">
+                </div>
+                <div class="col-1">
+                    <input asp-for="Fee">
                 </div>
             </div>
         </div>
+        <p></p>
+        <div class="form-group row text-center">
+            <div class="col-12">
+                <input type="submit" class="btn btn-danger" value="Sterge">
+            </div>
+        </div>
     </div>
+</div>
 </form>
-
-@section Scripts
-{
-    @{
-        <partial name="_ValidationScriptsPartial" />
-    }
-}
